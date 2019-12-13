@@ -55,8 +55,15 @@ settings::UserSettings MainWindow::getSettings()
 {
     settings::UserSettings settings;
     
-    settings.inputDir = ui->inputDir_combo->itemText(0).toStdString();
-    settings.outputDir = ui->outputDir_combo->itemText(0).toStdString();
+    if(ui->inputDir_combo->count() > 0)
+        settings.inputDir = ui->inputDir_combo->itemText(0).toStdString();
+    else
+        settings.inputDir = "";
+    
+    if(ui->outputDir_combo->count() > 0)
+        settings.outputDir = ui->outputDir_combo->itemText(0).toStdString();
+    else
+        settings.outputDir = "";
     
     settings.includeSubdirectories = ui->inputDir_includeSubdirs->checkState() == Qt::Checked;
     settings.leaveOryginalImages = ui->leaveOryginals_checkbox->checkState() == Qt::Checked;
@@ -78,7 +85,7 @@ void MainWindow::setSettings(settings::UserSettings settings)
     ui->inputDir_combo->clear();
     ui->outputDir_combo->clear();
     ui->inputDir_combo->addItem(QString(settings.inputDir.c_str()));
-    ui->inputDir_combo->addItem(QString(settings.outputDir.c_str()));
+    ui->outputDir_combo->addItem(QString(settings.outputDir.c_str()));
     
     auto boolToQtState = [](bool state)->Qt::CheckState
     {

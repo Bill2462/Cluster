@@ -40,16 +40,6 @@
      <string>Output directory:</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="inputDir_combo">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>141</width>
-      <height>26</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="inputDir_browse">
     <property name="geometry">
      <rect>
@@ -231,6 +221,16 @@
     </property>
     <property name="text">
      <string>Images distribution</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="inputDir_combo">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>141</width>
+      <height>26</height>
+     </rect>
     </property>
    </widget>
   </widget>
