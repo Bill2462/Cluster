@@ -24,9 +24,9 @@ void MainWindow::on_inputDir_browse_pressed()
 {
     //show the dialog
     QString dir = QFileDialog::getExistingDirectory(this, tr("Choose input directory"),
-                                                "/home",
-                                                QFileDialog::ShowDirsOnly | 
-                                                QFileDialog::DontResolveSymlinks);
+                                                    "/home",
+                                                    QFileDialog::ShowDirsOnly | 
+                                                    QFileDialog::DontResolveSymlinks);
     
     //update the state of inputDir_combo to show current directory
     updateDirectoryDisplay(ui->inputDir_combo, dir);
@@ -38,10 +38,10 @@ void MainWindow::on_inputDir_browse_pressed()
 void MainWindow::on_outputDir_browse_pressed()
 {
     //show dialog
-        QString dir = QFileDialog::getExistingDirectory(this, tr("Choose output directory"),
-                                                "/home",
-                                                QFileDialog::ShowDirsOnly | 
-                                                QFileDialog::DontResolveSymlinks);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose output directory"),
+                                                    "/home",
+                                                    QFileDialog::ShowDirsOnly | 
+                                                    QFileDialog::DontResolveSymlinks);
         
     //update the state of outputDir_combo to show current directory
     updateDirectoryDisplay(ui->outputDir_combo, dir);

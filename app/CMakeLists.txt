@@ -17,5 +17,7 @@ set(SOURCES
 
 add_executable(app ${SOURCES})
 
+find_library(${CMAKE_SOURCE_DIR} utils)
+target_link_libraries(app PRIVATE utils)
 target_link_libraries(app PRIVATE Qt5::Widgets)
 target_link_libraries(app PRIVATE Qt5::PrintSupport)
