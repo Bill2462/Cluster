@@ -144,9 +144,9 @@ void utils::moveFile(const std::string& source, const std::string& dest)
 }
 
 /**
- * @brief 
- * @param source
- * @param dest
+ * @brief Copy file.
+ * @param source Path to the source file.
+ * @param dest Path to the destination file.
  * @throw std::runtime_error If source or destination path does not exists.
  */
 void utils::copyFile(const std::string& source, const std::string& dest)
@@ -167,8 +167,9 @@ void utils::copyFile(const std::string& source, const std::string& dest)
 }
 
 /**
- * @brief
- * @param path
+ * @brief Create directory.
+ * @param path Path to the new directory.
+ * @throw std::runtime_error If directory already ezists or if something else happens.
  */
 void utils::makeDir(const std::string& path)
 {
