@@ -19,10 +19,17 @@ include_directories(include)
 find_package(OpenCV REQUIRED)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(../extLibs/mathtoolbox/include)
 
 set(SOURCES
     src/ImageUtils.cpp
+    
+    src/DimensionRedox/DimRedoxFactory.cpp
+    src/DimensionRedox/MDS.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
+
+link_directories("../extLibs/build/mathtoolbox/")
 target_link_libraries(magic ${OpenCV_LIBS})
+target_link_libraries(magic mathtoolbox)

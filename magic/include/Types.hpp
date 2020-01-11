@@ -26,10 +26,12 @@
 
 #include <vector>
 #include <opencv2/core/core.hpp>
+#include <eigen3/Eigen/Core>
 
 namespace magic
 {
     typedef cv::Mat Image;
+    typedef Eigen::VectorXd FeatureVector;
 }
 
 #endif 
