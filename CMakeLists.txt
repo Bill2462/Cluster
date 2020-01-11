@@ -9,4 +9,5 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -fconcepts")
 include_directories(utils/include)
 
 add_subdirectory(utils)
+add_subdirectory(magic)
 add_subdirectory(app)
