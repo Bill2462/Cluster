@@ -30,8 +30,12 @@
 
 namespace magic
 {
-    typedef cv::Mat Image;
-    typedef Eigen::VectorXd FeatureVector;
+    typedef std::vector<double> FeatureVector;
+    
+    typedef std::vector<Image> ImageDataset;
+    typedef std::vector<FeatureVector*> FeatureDataset;
+    
+    typedef std::vector<Image*> Cluster;
 }
 
 #endif 

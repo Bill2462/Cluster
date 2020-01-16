@@ -45,7 +45,7 @@ namespace magic
     {
     public:
         static std::shared_ptr<DimReductionAlgorithm> build(DimReductionAlgorithmType type);
-        virtual std::vector<FeatureVector> reduce(const std::vector<FeatureVector>& input, unsigned short outputDim) = 0;
+        virtual void reduce(FeatureDataset& dataset, unsigned short outputDim) = 0;
     };
     
 }

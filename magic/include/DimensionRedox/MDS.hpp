@@ -35,10 +35,10 @@ namespace magic
     class MDS : public magic::DimReductionAlgorithm
     {
     public:
-        std::vector<FeatureVector> reduce(const std::vector<FeatureVector>& input, unsigned short outputDim) override;
+        void reduce(FeatureDataset& dataset, unsigned short outputDim) override;
         
     private:
-        void computeDistanceMatrix(const std::vector<FeatureVector>& points);
+        void computeDistanceMatrix(const FeatureDataset& points);
         
         Eigen::MatrixXd distanceMatrix; /** @brief Distance matrix. */
     };

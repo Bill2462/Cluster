@@ -33,20 +33,23 @@ using namespace magic;
  * Matrix is not reallocated when size between calls does not change.
  * @param points Points.
  */
-void MDS::computeDistanceMatrix(const std::vector<FeatureVector>& points)
+void MDS::computeDistanceMatrix(const FeatureDataset& points)
 {
     //if size of dimensional matrix is different than point vector lenght we have to build a new one
     const size_t pointCount = points.size();
-    const size_t currentMatrixSize = distanceMatrix.rows();
+    const size_t currentMatrixSize = this->distanceMatrix.rows();
     if(currentMatrixSize != pointCount)
         distanceMatrix.resize(pointCount, pointCount);
     
     //compute dimension matrix
     for (size_t i = 0; i < pointCount; ++i)
     {
+        Eigen::VectorXd vect1 = Eigen::Map<Eigen::VectorXd>(points[i]->data(), points[i]->size());
         for (size_t j = i; j < pointCount; ++j)
         {
-            const double d = (points[i] - points[j]).norm();
+            //TODO Use low level memory access to avoid rebuilding Eigen vectors on each iteration
+            Eigen::VectorXd vect2 = Eigen::Map<Eigen::VectorXd>(points[j]->data(), points[j]->size());
+            const double d = (vect1 - vect2).norm();
             distanceMatrix(i, j) = d;
             distanceMatrix(j, i) = d;
         }
@@ -55,27 +58,26 @@ void MDS::computeDistanceMatrix(const std::vector<FeatureVector>& points)
 
 /**
  * @brief Perform dimensionality reduction using multidimensional scaling.
- * @param input Input points.
- * @param outputDim Number of dimensions in the
- * @return Points reduced to outputDim numer of dimensions.
+ * @param dataset Dataset that we want to reduce.
+ * @param outputDim Number of dimensions in the output.
  */
-std::vector<FeatureVector> MDS::reduce(const std::vector<FeatureVector>& input, unsigned short outputDim)
+void MDS::reduce(FeatureDataset& dataset, unsigned short outputDim)
 {
-    computeDistanceMatrix(input);
+    computeDistanceMatrix(dataset);
     
     //perform reduction
     const Eigen::MatrixXd reduced = mathtoolbox::ComputeClassicalMds(distanceMatrix, outputDim);
     
     //convert to array of vector
-    std::vector<FeatureVector> points;
     for(size_t i=0; i<(size_t)reduced.cols(); i++)
     {
-        FeatureVector vect(reduced.rows());
-        for(size_t r=0; r<(size_t)reduced.rows(); r++)
-            vect[r] = reduced(r, i);
+        //copy contents of the reduces matrix to the 
+        size_t r=0;
+        for(; r<(size_t)reduced.rows(); r++)
+            (*(dataset[i]))[r] = reduced(r, i);
         
-        points.push_back(vect);
+        //fill he remaining dimensions with 0's
+        for(; r<(*(dataset[i])).size(); r++)
+             (*(dataset[i]))[r] = 0;
     }
-    
-    return points;
 }
