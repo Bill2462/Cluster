@@ -32,6 +32,16 @@ namespace magic
 {
     typedef std::vector<double> FeatureVector;
     
+    /**
+     * @brief Image structure.
+     */
+    struct Image
+    {
+        std::string path;
+        cv::Mat image;
+        FeatureVector featureVector;
+    };
+
     typedef std::vector<Image> ImageDataset;
     typedef std::vector<FeatureVector*> FeatureDataset;
     

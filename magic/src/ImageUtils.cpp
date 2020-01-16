@@ -35,11 +35,11 @@ using namespace magic;
  */
 Image magic::loadImageFromFile(const std::string& filePath)
 {
-    Image img = cv::imread(filePath);
+    cv::Mat img = cv::imread(filePath);
     if(img.data == nullptr)
         throw(std::runtime_error("Cannot load file: " + filePath));
     
-    return img;
+    return {filePath, img, {}};
 }
 
 /**
@@ -51,9 +51,26 @@ Image magic::loadImageFromFile(const std::string& filePath)
 std::vector<Image> magic::loadImageBatch(const std::vector<std::string>& filePaths)
 {
     std::vector<Image> images;
+    images.reserve(filePaths.size());
     
     for(auto it=filePaths.begin(); it<filePaths.end(); it++)
         images.push_back(magic::loadImageFromFile(*it));
     
     return images;
+}
+
+/**
+ * @brief Generate features dataset.
+ * @param dataset Image daaset.
+ * @return Feature dataset.
+ */
+FeatureDataset magic::generateFeaturesDataset(const ImageDataset& dataset)
+{
+    FeatureDataset featureDataset;
+    featureDataset.reserve(dataset.size());
+    
+    for(auto it=dataset.begin(); it<dataset.end(); it++)
+        featureDataset.push_back(const_cast<FeatureVector*>(&((*it).featureVector)));
+
+    return featureDataset;
 }

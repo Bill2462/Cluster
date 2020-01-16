@@ -29,7 +29,8 @@
 namespace magic
 {
     Image loadImageFromFile(const std::string& filePath);
-    std::vector<Image> loadImageBatch(const std::vector<std::string>& filePaths);
+    ImageDataset loadImageBatch(const std::vector<std::string>& filePaths);
+    FeatureDataset generateFeaturesDataset(const ImageDataset& dataset);
 }
 
 #endif
