@@ -26,6 +26,8 @@ set(SOURCES
     
     src/DimensionRedox/DimRedoxFactory.cpp
     src/DimensionRedox/MDS.cpp
+    
+    src/FeatureExtractors/FeatureExtractor.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
