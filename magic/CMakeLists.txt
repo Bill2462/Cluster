@@ -28,6 +28,7 @@ set(SOURCES
     src/DimensionRedox/MDS.cpp
     
     src/FeatureExtractors/FeatureExtractor.cpp
+    src/FeatureExtractors/GlobalHistogram.cpp
 )
 
 add_library(magic STATIC ${SOURCES})

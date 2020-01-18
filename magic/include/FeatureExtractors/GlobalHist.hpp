@@ -32,6 +32,11 @@ namespace magic
     {
     public:
         void buildFeatures(ImageDataset& dataset) const override;
+        void setBinCount(unsigned int count);
+        unsigned int getBinCount() const;
+
+    private:
+        unsigned int binCount = 10;
     };
 }
 #endif
