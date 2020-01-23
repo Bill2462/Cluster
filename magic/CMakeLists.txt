@@ -29,6 +29,7 @@ set(SOURCES
     
     src/FeatureExtractors/FeatureExtractor.cpp
     src/FeatureExtractors/GlobalHistogram.cpp
+    src/FeatureExtractors/OpenCV_Descriptors.cpp
 )
 
 add_library(magic STATIC ${SOURCES})

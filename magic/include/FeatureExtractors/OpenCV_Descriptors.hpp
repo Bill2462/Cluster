@@ -25,13 +25,22 @@
 #define MAGIC_OPENCV_DESCRIPTOR_HPP_INCLUDED
 
 #include "FeatureExtractor.hpp"
+#include <opencv2/xfeatures2d.hpp>
 
 namespace magic
 {
     class OpenCV_Descriptor : public FeatureExtractor
     {
     public:
+        OpenCV_Descriptor();
         void buildFeatures(ImageDataset& dataset) const override;
+        
+        void setKeypointCount(unsigned int count);
+        unsigned int getKeypointCount() const;
+        
+    private:
+        cv::Ptr<cv::xfeatures2d::VGG> vgg; /** @brief VGG descriptor. */
+        unsigned int keypointCount = 5; /** @brief How many keypoints do we want to use. */
     };
 }
 #endif
