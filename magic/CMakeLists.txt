@@ -26,6 +26,10 @@ set(SOURCES
     
     src/DimensionRedox/DimRedoxFactory.cpp
     src/DimensionRedox/MDS.cpp
+    
+    src/FeatureExtractors/FeatureExtractor.cpp
+    src/FeatureExtractors/GlobalHistogram.cpp
+    src/FeatureExtractors/OpenCV_Descriptors.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
