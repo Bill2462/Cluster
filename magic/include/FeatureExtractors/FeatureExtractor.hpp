@@ -38,8 +38,7 @@ namespace magic
         enum Type
         {
             OPENCV2_EXTRAXTORS,
-            GLOBAL_HIST,
-            COLOR_WISE
+            GLOBAL_HIST
         };
 
         static std::shared_ptr<FeatureExtractor> build(Type type);

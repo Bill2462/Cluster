@@ -22,7 +22,6 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "FeatureExtractors/FeatureExtractor.hpp"
-#include "FeatureExtractors/ColorWise.hpp"
 #include "FeatureExtractors/GlobalHist.hpp"
 #include "FeatureExtractors/OpenCV_Descriptors.hpp"
 
@@ -42,9 +41,6 @@ std::shared_ptr<FeatureExtractor> FeatureExtractor::build(FeatureExtractor::Type
 
         case FeatureExtractor::GLOBAL_HIST:
             return std::shared_ptr<FeatureExtractor>(new OpenCV_Descriptor());
-
-        case FeatureExtractor::COLOR_WISE:
-            return std::shared_ptr<FeatureExtractor>(new ColorWise());
     }
     
     return std::shared_ptr<FeatureExtractor>(nullptr);
