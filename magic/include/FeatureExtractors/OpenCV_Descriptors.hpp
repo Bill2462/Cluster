@@ -29,6 +29,9 @@
 
 namespace magic
 {
+    /**
+     * @brief Class implementing feature extraction using openCV VGG descriptor.
+     */
     class OpenCV_Descriptor : public FeatureExtractor
     {
     public:

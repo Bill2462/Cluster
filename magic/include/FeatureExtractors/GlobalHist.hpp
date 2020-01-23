@@ -28,6 +28,10 @@
 
 namespace magic
 {
+    
+    /**
+     * @brief Class for global histogram feature extractor.
+     */
     class GlobalHistogram : public FeatureExtractor
     {
     public:
@@ -38,7 +42,7 @@ namespace magic
         unsigned int getBinCount() const;
 
     private:
-        unsigned int binCount = 10;
+        unsigned int binCount = 10; /** @brief Number of bins in a histogram. */
     };
 }
 #endif

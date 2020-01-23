@@ -45,6 +45,12 @@ namespace magic
     {
     public:
         static std::shared_ptr<DimReductionAlgorithm> build(DimReductionAlgorithmType type);
+        
+        /**
+         * @brief Reduce features vectors of the entire dataset.
+         * @param dataset Image dataset.
+         * @param outputDim Number of dimensions that the output is supposed to have.
+         */
         virtual void reduce(FeatureDataset& dataset, unsigned short outputDim) = 0;
     };
     

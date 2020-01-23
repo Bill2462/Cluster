@@ -30,7 +30,7 @@
 namespace magic
 {
     /**
-     * @brief Feature extractor class.
+     * @brief Feature extractor base class.
      */
     class FeatureExtractor
     {
@@ -43,7 +43,16 @@ namespace magic
 
         static std::shared_ptr<FeatureExtractor> build(Type type);
         
+        /**
+         * @brief Build feature vector for the image dataset.
+         * @param dataset Image dataset.
+         */
         virtual void buildFeatures(ImageDataset& dataset) const = 0;
+        
+        /**
+         * @brief Get the lenght of the feature vector.
+         * @return Lenght of the feature vector.
+         */
         virtual unsigned int featureVectorSize() const = 0;
     };
 }
