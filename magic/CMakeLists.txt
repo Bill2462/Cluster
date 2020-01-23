@@ -14,16 +14,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.5)
+include_directories(include)
 
-project(app LANGUAGES CXX)
+find_package(OpenCV REQUIRED)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -fconcepts")
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(../extLibs/mathtoolbox/include)
 
-include_directories(utils/include)
+set(SOURCES
+    src/ImageUtils.cpp
+    
+    src/DimensionRedox/DimRedoxFactory.cpp
+    src/DimensionRedox/MDS.cpp
+    
+    src/FeatureExtractors/FeatureExtractor.cpp
+    src/FeatureExtractors/GlobalHistogram.cpp
+    src/FeatureExtractors/OpenCV_Descriptors.cpp
+)
 
-add_subdirectory(utils)
-add_subdirectory(magic)
-add_subdirectory(app)
+add_library(magic STATIC ${SOURCES})
+
+link_directories("../extLibs/build/mathtoolbox/")
+target_link_libraries(magic ${OpenCV_LIBS})
+target_link_libraries(magic mathtoolbox)
