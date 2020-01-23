@@ -44,6 +44,7 @@ namespace magic
         static std::shared_ptr<FeatureExtractor> build(Type type);
         
         virtual void buildFeatures(ImageDataset& dataset) const = 0;
+        virtual unsigned int featureVectorSize() const = 0;
     };
 }
 

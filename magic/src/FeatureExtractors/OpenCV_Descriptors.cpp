@@ -55,6 +55,15 @@ unsigned int OpenCV_Descriptor::getKeypointCount() const
 }
 
 /**
+ * @brief Get feature vector size.
+ * @return Feature vector size.
+ */
+unsigned int OpenCV_Descriptor::featureVectorSize() const
+{
+    return keypointCount*48;
+}
+
+/**
  * @brief Compute OpenCV descriptors for the entire dataset.
  * @param dataset Dataset for which we want to compute the features.
  */

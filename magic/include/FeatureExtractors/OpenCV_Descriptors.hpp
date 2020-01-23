@@ -34,6 +34,7 @@ namespace magic
     public:
         OpenCV_Descriptor();
         void buildFeatures(ImageDataset& dataset) const override;
+        unsigned int featureVectorSize() const override;
         
         void setKeypointCount(unsigned int count);
         unsigned int getKeypointCount() const;

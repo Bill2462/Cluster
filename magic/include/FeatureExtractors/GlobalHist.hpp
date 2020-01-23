@@ -32,6 +32,8 @@ namespace magic
     {
     public:
         void buildFeatures(ImageDataset& dataset) const override;
+        unsigned int featureVectorSize() const override;
+        
         void setBinCount(unsigned int count);
         unsigned int getBinCount() const;
 

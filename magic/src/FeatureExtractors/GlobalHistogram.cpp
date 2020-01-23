@@ -50,6 +50,15 @@ unsigned int GlobalHistogram::getBinCount() const
 }
 
 /**
+ * @brief Get feature vector size.
+ * @return Feature vector size.
+ */
+unsigned int GlobalHistogram::featureVectorSize() const
+{
+    return binCount;
+}
+
+/**
  * @brief Compute color histogram features for the entire dataset.
  * @param dataset Image dataset for which we want to compute all the features.
  */
