@@ -35,7 +35,7 @@ namespace magic
     class GlobalHistogram : public FeatureExtractor
     {
     public:
-        void buildFeatures(ImageDataset& dataset) const override;
+        FeatureDataset buildFeatures(const ImageDataset& dataset) const override;
         unsigned int featureVectorSize() const override;
         
         void setBinCount(unsigned int count);

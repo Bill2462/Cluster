@@ -28,9 +28,8 @@
 
 namespace magic
 {
-    std::shared_ptr<Image> loadImageFromFile(const std::string& filePath);
+    Image loadImageFromFile(const std::string& filePath);
     ImageDataset loadImageBatch(const std::vector<std::string>& filePaths);
-    FeatureDataset generateFeaturesDataset(const ImageDataset& dataset);
 }
 
 #endif

@@ -51,8 +51,9 @@ namespace magic
          * @brief Reduce features vectors of the entire dataset.
          * @param dataset Image dataset.
          * @param outputDim Number of dimensions that the output is supposed to have.
+         * @return Reduced feature dataset.
          */
-        virtual void reduce(FeatureDataset& dataset, unsigned short outputDim) = 0;
+        virtual FeatureDataset reduce(const FeatureDataset& dataset, unsigned short outputDim) = 0;
     };
 }
 

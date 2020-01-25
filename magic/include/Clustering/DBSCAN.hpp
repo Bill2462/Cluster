@@ -34,7 +34,7 @@ namespace magic
     class DBSCAN : public ClusteringAlgorithm
     {
     public:
-        std::vector<Cluster> cluster(const ImageDataset& dataset) const override;
+        std::vector<Cluster> cluster(const FeatureDataset& dataset) const override;
     };
 }
 

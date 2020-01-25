@@ -66,9 +66,13 @@ unsigned int OpenCV_Descriptor::featureVectorSize() const
 /**
  * @brief Compute OpenCV descriptors for the entire dataset.
  * @param dataset Dataset for which we want to compute the features.
+ * @return Feature dataset.
  */
-void OpenCV_Descriptor::buildFeatures(ImageDataset& dataset) const
+FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) const
 {
+    FeatureDataset featureDataset;
+    featureDataset.reserve(dataset.size());
+
     std::vector<cv::KeyPoint> keyPoints;
     FeatureVector featureVector;
     cv::Mat features;
@@ -78,7 +82,7 @@ void OpenCV_Descriptor::buildFeatures(ImageDataset& dataset) const
     for(auto it=dataset.begin(); it<dataset.end(); it++)
     {
         //extract keypoints
-        vgg->detect((*it)->image, keyPoints);
+        vgg->detect((*it).image, keyPoints);
         
         //sort keypoints by the response, the higher response, the better the keypoint
         std::sort(keyPoints.begin(), keyPoints.end(), [](auto& a, auto& b) ->bool { return a.response > b.response; });
@@ -88,7 +92,7 @@ void OpenCV_Descriptor::buildFeatures(ImageDataset& dataset) const
             keyPoints.resize(keypointCount);
         
         //compute features
-        vgg->compute((*it)->image, keyPoints, features);
+        vgg->compute((*it).image, keyPoints, features);
 
         //flatten the features matrix 
         featureVector.assign(features.datastart, features.dataend);
@@ -100,7 +104,12 @@ void OpenCV_Descriptor::buildFeatures(ImageDataset& dataset) const
                 featureVector.push_back(0);
         }
         
-        //save the feature vector to the dataset member
-        (*it)->featureVector = featureVector;
+        ImageFeature feature;
+        feature.path = (*it).path;
+        feature.featureVector = featureVector;
+
+        featureDataset.push_back(feature);
     }
+    
+    return featureDataset;
 }

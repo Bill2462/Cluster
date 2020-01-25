@@ -65,13 +65,13 @@ std::shared_ptr<ClusteringAlgorithm> ClusteringAlgorithm::build(ClusteringAlgori
  * @param dataset Images dataset.
  * @return Vector of feature vectors.
  */
-std::vector<FeatureVector> ClusteringAlgorithm::copyFeatures(const ImageDataset& dataset) const
+std::vector<FeatureVector> ClusteringAlgorithm::copyFeatures(const FeatureDataset& dataset) const
 {
     std::vector<FeatureVector> features;
     features.resize(dataset.size());
     
     for(auto it=dataset.begin(); it<dataset.end(); it++)
-        features.push_back((*it)->featureVector);
+        features.push_back((*it).featureVector);
 
     return features;
 }
@@ -80,9 +80,10 @@ std::vector<FeatureVector> ClusteringAlgorithm::copyFeatures(const ImageDataset&
  * @brief Export clusters created by clustering library to the cluster format used by the rest
  * of the project.
  * @param clusters Clusters created by the cluster libary.
+ * @param dataset Feature dataset.
  * @return Vector of clusters.
  */
-std::vector<Cluster> ClusteringAlgorithm::exportClusters(const pyclustering::clst::cluster_data& clusters, const ImageDataset& dataset) const
+std::vector<Cluster> ClusteringAlgorithm::exportClusters(const pyclustering::clst::cluster_data& clusters, const FeatureDataset& dataset) const
 {
     //clusters data is a vector of vectors of size_t, each size_t is an index in the original image dataset
     std::vector<Cluster> output;
@@ -91,6 +92,8 @@ std::vector<Cluster> ClusteringAlgorithm::exportClusters(const pyclustering::cls
         Cluster cluster;
         for(auto it2=(*it).begin(); it2<(*it).end(); it2++)
             cluster.push_back(dataset[*it2]);
+        
+        output.push_back(cluster);
     }
 
     return output;

@@ -40,13 +40,20 @@ namespace magic
     {
         std::string path;
         cv::Mat image;
+    };
+    
+    /**
+     * @brief Image feature structure.
+     */
+    struct ImageFeature
+    {
+        std::string path;
         FeatureVector featureVector;
     };
 
-    typedef std::vector<std::shared_ptr<Image>> ImageDataset;
-    typedef std::vector<std::shared_ptr<FeatureVector>> FeatureDataset;
-    
-    typedef std::vector<std::shared_ptr<Image>> Cluster;
+    typedef std::vector<Image> ImageDataset;
+    typedef std::vector<ImageFeature> FeatureDataset;
+    typedef std::vector<ImageFeature> Cluster;
 }
 
 #endif 

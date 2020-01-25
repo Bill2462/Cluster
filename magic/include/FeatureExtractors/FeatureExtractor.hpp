@@ -47,8 +47,9 @@ namespace magic
         /**
          * @brief Build feature vector for the image dataset.
          * @param dataset Image dataset.
+         * @return Feature dataset.
          */
-        virtual void buildFeatures(ImageDataset& dataset) const = 0;
+        virtual FeatureDataset buildFeatures(const ImageDataset& dataset) const = 0;
         
         /**
          * @brief Get the lenght of the feature vector.

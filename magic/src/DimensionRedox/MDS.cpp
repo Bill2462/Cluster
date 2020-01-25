@@ -44,11 +44,11 @@ void MDS::computeDistanceMatrix(const FeatureDataset& points)
     //compute dimension matrix
     for (size_t i = 0; i < pointCount; ++i)
     {
-        Eigen::VectorXd vect1 = Eigen::Map<Eigen::VectorXd>(points[i]->data(), points[i]->size());
+        Eigen::VectorXd vect1 = Eigen::Map<Eigen::VectorXd>((double*)points[i].featureVector.data(), points[i].featureVector.size());
         for (size_t j = i; j < pointCount; ++j)
         {
             //TODO Use low level memory access to avoid rebuilding Eigen vectors on each iteration
-            Eigen::VectorXd vect2 = Eigen::Map<Eigen::VectorXd>(points[j]->data(), points[j]->size());
+            Eigen::VectorXd vect2 = Eigen::Map<Eigen::VectorXd>((double*)points[j].featureVector.data(), points[j].featureVector.size());
             const double d = (vect1 - vect2).norm();
             distanceMatrix(i, j) = d;
             distanceMatrix(j, i) = d;
@@ -60,8 +60,9 @@ void MDS::computeDistanceMatrix(const FeatureDataset& points)
  * @brief Perform dimensionality reduction using multidimensional scaling.
  * @param dataset Dataset that we want to reduce.
  * @param outputDim Number of dimensions in the output.
+ * @return Reduced feature dataset.
  */
-void MDS::reduce(FeatureDataset& dataset, unsigned short outputDim)
+FeatureDataset MDS::reduce(const FeatureDataset& dataset, unsigned short outputDim)
 {
     computeDistanceMatrix(dataset);
     
@@ -69,15 +70,19 @@ void MDS::reduce(FeatureDataset& dataset, unsigned short outputDim)
     const Eigen::MatrixXd reduced = mathtoolbox::ComputeClassicalMds(distanceMatrix, outputDim);
     
     //convert to array of vector
+    FeatureDataset featureDataset;
+    featureDataset.reserve(dataset.size());
     for(size_t i=0; i<(size_t)reduced.cols(); i++)
     {
-        //copy contents of the reduces matrix to the 
-        size_t r=0;
-        for(; r<(size_t)reduced.rows(); r++)
-            (*(dataset[i]))[r] = reduced(r, i);
+        //copy contents of the reduces matrix to the  feature vector
+        ImageFeature feature;
+        feature.path = dataset[i].path;
+
+        for(size_t r=0; r<(size_t)reduced.rows(); r++)
+            feature.featureVector.push_back(reduced(r, i));
         
-        //fill he remaining dimensions with 0's
-        for(; r<(*(dataset[i])).size(); r++)
-             (*(dataset[i]))[r] = 0;
+        featureDataset.push_back(feature);
     }
+    
+    return featureDataset;
 }

@@ -33,16 +33,13 @@ using namespace magic;
  * @return Image object.
  * @throw std::runtime_error If error occurs dring loading.
  */
-std::shared_ptr<Image> magic::loadImageFromFile(const std::string& filePath)
+Image magic::loadImageFromFile(const std::string& filePath)
 {
     cv::Mat img = cv::imread(filePath);
     if(img.data == nullptr)
         throw(std::runtime_error("Cannot load file: " + filePath));
-    
-    std::shared_ptr<Image> ptr(new Image);
-    ptr->path = filePath;
-    ptr->image = img;
-    return ptr;
+
+    return {filePath, img};
 }
 
 /**
@@ -60,20 +57,4 @@ ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
         images.push_back(magic::loadImageFromFile(*it));
     
     return images;
-}
-
-/**
- * @brief Generate features dataset.
- * @param dataset Image daaset.
- * @return Feature dataset.
- */
-FeatureDataset magic::generateFeaturesDataset(const ImageDataset& dataset)
-{
-    FeatureDataset featureDataset;
-    featureDataset.reserve(dataset.size());
-    
-    for(auto it=dataset.begin(); it<dataset.end(); it++)
-        featureDataset.push_back(std::shared_ptr<FeatureVector>(new FeatureVector((*it)->featureVector)));
-
-    return featureDataset;
 }

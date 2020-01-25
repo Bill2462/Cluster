@@ -55,11 +55,11 @@ namespace magic
          * @param dataset Image dataset with computed features.
          * @return Clusters found.
          */
-        virtual std::vector<Cluster> cluster(const ImageDataset& dataset) const = 0;
+        virtual std::vector<Cluster> cluster(const FeatureDataset& dataset) const = 0;
         
     protected:
-        std::vector<FeatureVector> copyFeatures(const ImageDataset& dataset) const;
-        std::vector<Cluster> exportClusters(const pyclustering::clst::cluster_data& clusters, const ImageDataset& dataset) const;
+        std::vector<FeatureVector> copyFeatures(const FeatureDataset& dataset) const;
+        std::vector<Cluster> exportClusters(const pyclustering::clst::cluster_data& clusters, const FeatureDataset& dataset) const;
     };
 }
 

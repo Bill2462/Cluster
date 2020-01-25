@@ -34,7 +34,7 @@ namespace magic
     class K_Medians : public ClusteringAlgorithm
     {
     public:
-        std::vector<Cluster> cluster(const ImageDataset& dataset) const override;
+        std::vector<Cluster> cluster(const FeatureDataset& dataset) const override;
     };
 }
 
