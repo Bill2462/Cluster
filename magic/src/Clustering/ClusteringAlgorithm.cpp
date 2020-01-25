@@ -25,6 +25,7 @@
 #include "Clustering/K-Means.hpp"
 #include "Clustering/K-Medians.hpp"
 #include "Clustering/ROCK.hpp"
+#include <exception>
 
 using namespace magic;
 
@@ -32,6 +33,7 @@ using namespace magic;
  * @brief Build clustering algorithm.
  * @param type Clustering algorithm type.
  * @return Shared pointer to the clustering algorithm object. If type is invalid, returns nullptr.
+ * @throw std::runtime_error If the type of the algorithm is invalid.
  */
 std::shared_ptr<ClusteringAlgorithm> ClusteringAlgorithm::build(ClusteringAlgorithm::Type type)
 {
@@ -48,8 +50,13 @@ std::shared_ptr<ClusteringAlgorithm> ClusteringAlgorithm::build(ClusteringAlgori
 
         case ROCK_ALGORITHM:
             return std::shared_ptr<ClusteringAlgorithm>(new ROCK);
+            
+        default:
+            break;
     }
 
+    throw(std::runtime_error("Invalid clustering algorithm type"));
+    
     return std::shared_ptr<ClusteringAlgorithm>(nullptr);
 }
 

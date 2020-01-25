@@ -32,12 +32,15 @@ using namespace magic;
  * @return Returns a shared pointer to the dimensionality reduction algorithm.
  * @throw std::runtime_error If the type of the algorithm is invalid.
  */
-std::shared_ptr<DimReductionAlgorithm> magic::DimReductionAlgorithm::build(DimReductionAlgorithmType type)
+std::shared_ptr<DimReductionAlgorithm> magic::DimReductionAlgorithm::build(DimReductionAlgorithm::Type type)
 {
     switch(type)
     {
         case MDS_ALGORITHM:
             return std::shared_ptr<DimReductionAlgorithm>(new MDS);
+
+        default:
+            break;
     };
     
     throw(std::runtime_error("Invalid dimensionality reduction algorithm type"));

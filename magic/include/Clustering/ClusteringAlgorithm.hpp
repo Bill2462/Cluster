@@ -45,7 +45,8 @@ namespace magic
             DBSCAN_ALGORITHM,
             K_MEANS_ALGORITHM,
             K_MEDIANS_ALGORITHM,
-            ROCK_ALGORITHM
+            ROCK_ALGORITHM,
+            NONE
         };
         static std::shared_ptr<ClusteringAlgorithm> build(Type type);
         
