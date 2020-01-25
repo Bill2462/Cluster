@@ -43,7 +43,7 @@ namespace magic
         FeatureVector featureVector;
     };
 
-    typedef std::vector<Image> ImageDataset;
+    typedef std::vector<std::shared_ptr<Image>> ImageDataset;
     typedef std::vector<std::shared_ptr<FeatureVector>> FeatureDataset;
     
     typedef std::vector<std::shared_ptr<Image>> Cluster;

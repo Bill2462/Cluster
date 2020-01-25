@@ -33,13 +33,16 @@ using namespace magic;
  * @return Image object.
  * @throw std::runtime_error If error occurs dring loading.
  */
-Image magic::loadImageFromFile(const std::string& filePath)
+std::shared_ptr<Image> magic::loadImageFromFile(const std::string& filePath)
 {
     cv::Mat img = cv::imread(filePath);
     if(img.data == nullptr)
         throw(std::runtime_error("Cannot load file: " + filePath));
     
-    return {filePath, img, {}};
+    std::shared_ptr<Image> ptr(new Image);
+    ptr->path = filePath;
+    ptr->image = img;
+    return ptr;
 }
 
 /**
@@ -48,9 +51,9 @@ Image magic::loadImageFromFile(const std::string& filePath)
  * @return Vector of image objects.
  * @throw std::runtime_error If error occurs during loading.
  */
-std::vector<Image> magic::loadImageBatch(const std::vector<std::string>& filePaths)
+ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
 {
-    std::vector<Image> images;
+    ImageDataset images;
     images.reserve(filePaths.size());
     
     for(auto it=filePaths.begin(); it<filePaths.end(); it++)
@@ -70,7 +73,7 @@ FeatureDataset magic::generateFeaturesDataset(const ImageDataset& dataset)
     featureDataset.reserve(dataset.size());
     
     for(auto it=dataset.begin(); it<dataset.end(); it++)
-        featureDataset.push_back(std::shared_ptr<FeatureVector>(new FeatureVector((*it).featureVector)));
+        featureDataset.push_back(std::shared_ptr<FeatureVector>(new FeatureVector((*it)->featureVector)));
 
     return featureDataset;
 }
