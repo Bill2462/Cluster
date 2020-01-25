@@ -1,8 +1,8 @@
 /**
- * @file ImageUtils.hpp
- * @brief This header file contains declarations for image utility functions.
+ * @file DBSCAN.cpp
+ * @brief This source file contains source code for DBSCAN clustering algorithm.
  * @author Krzysztof Adamkiewicz
- * @date 11/1/2020
+ * @date 25/1/2020
  */
 
 // This file is a part of Cluster - Application for image clustering.
@@ -21,16 +21,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef IMAGE_UTILS_HPP_INCLUDED
-#define IMAGE_UTILS_HPP_INCLUDED
+#include "pyclustering/cluster/dbscan.hpp"
+#include "Clustering/DBSCAN.hpp"
 
-#include "Types.hpp"
+using namespace magic;
 
-namespace magic
+/**
+ * @brief Perform clustering operation using DBSCAN algorithm.
+ * @param features Points.
+ * @return Vector of clusters.
+ */
+std::vector<Cluster> DBSCAN::cluster(const ImageDataset& dataset) const
 {
-    std::shared_ptr<Image> loadImageFromFile(const std::string& filePath);
-    ImageDataset loadImageBatch(const std::vector<std::string>& filePaths);
-    FeatureDataset generateFeaturesDataset(const ImageDataset& dataset);
+    std::vector<FeatureVector> features = copyFeatures(dataset);
+    pyclustering::clst::cluster_data clusters;
+    
+    //perform clustering
+    pyclustering::clst::dbscan dbscan;
+    dbscan.process(features, clusters);
+    
+    //export clustering results
+    return exportClusters(clusters, dataset);
 }
-
-#endif
