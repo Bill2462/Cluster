@@ -34,6 +34,9 @@ set(SOURCES
     
     src/Clustering/ClusteringAlgorithm.cpp
     src/Clustering/K-Means.cpp
+    src/Clustering/K-Medians.cpp
+    src/Clustering/ROCK.cpp
+    src/Clustering/DBSCAN.cpp
 )
 
 add_library(magic STATIC ${SOURCES})

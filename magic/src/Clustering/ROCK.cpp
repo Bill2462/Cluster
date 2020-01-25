@@ -1,8 +1,8 @@
 /**
- * @file K-Means.cpp
- * @brief This source file contains source code for K-Means clustering algorithm.
+ * @file ROCK.cpp
+ * @brief This source file contains source code for ROCK clustering algorithm.
  * @author Krzysztof Adamkiewicz
- * @date 23/1/2020
+ * @date 25/1/2020
  */
 
 // This file is a part of Cluster - Application for image clustering.
@@ -21,24 +21,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "pyclustering/cluster/kmeans.hpp"
-#include "Clustering/K-Means.hpp"
+#include "pyclustering/cluster/rock.hpp"
+#include "Clustering/ROCK.hpp"
 
 using namespace magic;
 
 /**
- * @brief Perform clustering operation using K-Means algorithm.
+ * @brief Perform clustering operation using ROCK algorithm.
  * @param features Points.
  * @return Vector of clusters.
  */
-std::vector<Cluster> K_Means::cluster(const ImageDataset& dataset) const
+std::vector<Cluster> ROCK::cluster(const ImageDataset& dataset) const
 {
     std::vector<FeatureVector> features = copyFeatures(dataset);
     pyclustering::clst::cluster_data clusters;
     
     //perform clustering
-    pyclustering::clst::kmeans kmeans;
-    kmeans.process(features, clusters);
+    pyclustering::clst::rock rock;
+    rock.process(features, clusters);
     
     //export clustering results
     return exportClusters(clusters, dataset);

@@ -26,7 +26,7 @@
 
 #include <vector>
 #include <memory>
-#include "pyclustering/cluster/kmeans.hpp"
+#include "pyclustering/cluster/cluster_data.hpp"
 #include "Types.hpp"
 
 namespace magic
