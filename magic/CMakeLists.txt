@@ -33,6 +33,7 @@ set(SOURCES
     src/FeatureExtractors/OpenCV_Descriptors.cpp
     
     src/Clustering/ClusteringAlgorithm.cpp
+    src/Clustering/K-Means.cpp
 )
 
 add_library(magic STATIC ${SOURCES})

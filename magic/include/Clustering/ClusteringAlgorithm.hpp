@@ -26,7 +26,8 @@
 
 #include <vector>
 #include <memory>
-#include "../Types.hpp"
+#include "pyclustering/cluster/kmeans.hpp"
+#include "Types.hpp"
 
 namespace magic
 {
@@ -54,6 +55,10 @@ namespace magic
          * @return Clusters found.
          */
         virtual std::vector<Cluster> cluster(const ImageDataset& dataset) const = 0;
+        
+    protected:
+        std::vector<FeatureVector> copyFeatures(const ImageDataset& dataset) const;
+        std::vector<Cluster> exportClusters(const pyclustering::clst::cluster_data& clusters, const ImageDataset& dataset) const;
     };
 }
 
