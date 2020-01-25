@@ -1,8 +1,8 @@
 /**
- * @file ImageUtils.hpp
- * @brief This header file contains declarations for image utility functions.
+ * @file DBSCAN.hpp
+ * @brief This header file contains DBSCAN clustering algorithm class.
  * @author Krzysztof Adamkiewicz
- * @date 11/1/2020
+ * @date 23/1/2020
  */
 
 // This file is a part of Cluster - Application for image clustering.
@@ -21,16 +21,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef IMAGE_UTILS_HPP_INCLUDED
-#define IMAGE_UTILS_HPP_INCLUDED
+#ifndef DBSCAN_HPP_INCLUDED
+#define DBSCAN_HPP_INCLUDED
 
-#include "Types.hpp"
+#include "ClusteringAlgorithm.hpp"
 
 namespace magic
 {
-    std::shared_ptr<Image> loadImageFromFile(const std::string& filePath);
-    ImageDataset loadImageBatch(const std::vector<std::string>& filePaths);
-    FeatureDataset generateFeaturesDataset(const ImageDataset& dataset);
+    /**
+     * @brief Class implementing DBSCAN algorithm.
+     */
+    class DBSCAN : public ClusteringAlgorithm
+    {
+    public:
+        std::vector<Cluster> cluster(const ImageDataset& dataset) const override;
+    };
 }
 
 #endif

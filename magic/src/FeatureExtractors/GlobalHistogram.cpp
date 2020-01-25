@@ -71,7 +71,7 @@ void GlobalHistogram::buildFeatures(ImageDataset& dataset) const
     for(auto it=dataset.begin(); it<dataset.end(); it++)
     {
         //convert image to HSV
-        cv::cvtColor((*it).image, hsvImage, cv::COLOR_RGB2HSV);
+        cv::cvtColor((*it)->image, hsvImage, cv::COLOR_RGB2HSV);
         
         //extract channels
         cv::split(hsvImage, channels);
@@ -88,8 +88,8 @@ void GlobalHistogram::buildFeatures(ImageDataset& dataset) const
         cv::calcHist(&channels[0], sourceChannelNum, &channelDim, dummy, hist, histogramDimensionality, &histSize, &histRange, uniform, accumulate);
         
         //save it into the vector
-        (*it).featureVector.reserve(hist.cols);
+        (*it)->featureVector.reserve(hist.cols);
         for(int x=0; x<hist.cols; x++)
-            (*it).featureVector.push_back(hist.at<double>(0, x));
+            (*it)->featureVector.push_back(hist.at<double>(0, x));
     }
 }
