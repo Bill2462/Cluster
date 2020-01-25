@@ -25,6 +25,7 @@
 #define MAGIC_TYPES_HPP_INCLUDED
 
 #include <vector>
+#include <memory>
 #include <opencv2/core/core.hpp>
 #include <eigen3/Eigen/Core>
 
@@ -43,9 +44,9 @@ namespace magic
     };
 
     typedef std::vector<Image> ImageDataset;
-    typedef std::vector<FeatureVector*> FeatureDataset;
+    typedef std::vector<std::shared_ptr<FeatureVector>> FeatureDataset;
     
-    typedef std::vector<Image*> Cluster;
+    typedef std::vector<std::shared_ptr<Image>> Cluster;
 }
 
 #endif 

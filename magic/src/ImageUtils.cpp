@@ -70,7 +70,7 @@ FeatureDataset magic::generateFeaturesDataset(const ImageDataset& dataset)
     featureDataset.reserve(dataset.size());
     
     for(auto it=dataset.begin(); it<dataset.end(); it++)
-        featureDataset.push_back(const_cast<FeatureVector*>(&((*it).featureVector)));
+        featureDataset.push_back(std::shared_ptr<FeatureVector>(new FeatureVector((*it).featureVector)));
 
     return featureDataset;
 }
