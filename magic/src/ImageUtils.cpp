@@ -24,6 +24,7 @@
 #include "ImageUtils.hpp"
 #include <exception>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace magic;
 
@@ -74,7 +75,37 @@ ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths, st
     {
         images.push_back(magic::loadImageFromFile(*it));
         progressCounter.fetch_add(1, std::memory_order_relaxed);//increment progress counter
-    }
+    } 
     
     return images;
+}
+
+/**
+ * @brief Resize the entire dataset.
+ * @param images Image dataset.
+ * @param width Width of the output images.
+ * @param height Height of the output images.
+ */
+void magic::resizeDataset(ImageDataset& images, unsigned int width, unsigned int height)
+{
+    for(auto it=images.begin(); it<images.end(); it++)
+    {
+        cv::resize((*it).image, (*it).image, cv::Size(width, height), cv::INTER_LINEAR);
+    }
+}
+
+/**
+ * @brief Resize the entire dataset with the progress counter.
+ * @param images Image dataset.
+ * @param progressCounter Progress counter.
+ * @param width Width of the output images.
+ * @param height Height of the output images.
+ */
+void magic::resizeDataset(ImageDataset& images, std::atomic<size_t>& progressCounter, unsigned int width, unsigned int height)
+{
+    for(auto it=images.begin(); it<images.end(); it++)
+    {
+        cv::resize((*it).image, (*it).image, cv::Size(width, height), cv::INTER_LINEAR);
+        progressCounter.fetch_add(1, std::memory_order_relaxed);
+    }
 }
