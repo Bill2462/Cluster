@@ -52,3 +52,12 @@ std::shared_ptr<FeatureExtractor> FeatureExtractor::build(FeatureExtractor::Type
     
     return std::shared_ptr<FeatureExtractor>(nullptr);
 }
+
+/**
+ * @brief Set progress variable counter.
+ * @param progressCounter Progress counter atomic variable.
+ */
+void FeatureExtractor::setProgressCounter(std::atomic<size_t>& progressCounter)
+{
+    this->progressCounter = &progressCounter;
+}

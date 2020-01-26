@@ -109,6 +109,9 @@ FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) con
         feature.featureVector = featureVector;
 
         featureDataset.push_back(feature);
+
+        if(progressCounter)
+            progressCounter->fetch_add(1, std::memory_order_relaxed);//increment progress counter
     }
     
     return featureDataset;

@@ -44,7 +44,7 @@ Image magic::loadImageFromFile(const std::string& filePath)
 
 /**
  * @brief Load a batch of images.
- * @param filePaths
+ * @param filePaths Vector of image paths.
  * @return Vector of image objects.
  * @throw std::runtime_error If error occurs during loading.
  */
@@ -55,6 +55,26 @@ ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
     
     for(auto it=filePaths.begin(); it<filePaths.end(); it++)
         images.push_back(magic::loadImageFromFile(*it));
+    
+    return images;
+}
+
+/**
+ * @brief Load a batch of images with a progress counter.
+ * @param filePaths Vector of image paths.
+ * @return Vector of image objects.
+ * @throw std::runtime_error If error occurs during loading.
+ */
+ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths, std::atomic<size_t>& progressCounter)
+{
+    ImageDataset images;
+    images.reserve(filePaths.size());
+    
+    for(auto it=filePaths.begin(); it<filePaths.end(); it++)
+    {
+        images.push_back(magic::loadImageFromFile(*it));
+        progressCounter.fetch_add(1, std::memory_order_relaxed);//increment progress counter
+    }
     
     return images;
 }

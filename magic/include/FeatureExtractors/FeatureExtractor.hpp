@@ -26,6 +26,7 @@
 
 #include "Types.hpp"
 #include <memory>
+#include <atomic>
 
 namespace magic
 {
@@ -50,12 +51,17 @@ namespace magic
          * @return Feature dataset.
          */
         virtual FeatureDataset buildFeatures(const ImageDataset& dataset) const = 0;
+
+        void setProgressCounter(std::atomic<size_t>& progressCounter);
         
         /**
          * @brief Get the lenght of the feature vector.
          * @return Lenght of the feature vector.
          */
         virtual unsigned int featureVectorSize() const = 0;
+        
+    protected:
+        mutable std::atomic<size_t>* progressCounter = nullptr; /** @brief Progress counter. */
     };
 }
 

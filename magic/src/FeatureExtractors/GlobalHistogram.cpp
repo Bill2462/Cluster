@@ -99,6 +99,9 @@ FeatureDataset GlobalHistogram::buildFeatures(const ImageDataset& dataset) const
             feature.featureVector.push_back(hist.at<double>(0, x));
         
         featureDataset.push_back(feature);
+
+        if(progressCounter)
+            progressCounter->fetch_add(1, std::memory_order_relaxed);//increment progress counter
     }
     
     return featureDataset;
