@@ -105,7 +105,7 @@ bool Pipeline::isCurrentStageFinished() const
             return dimRedoxCompleted;
         
         default:
-            return false;
+            return true;
     }
 
     return false;
