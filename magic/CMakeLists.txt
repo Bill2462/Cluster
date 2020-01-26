@@ -37,6 +37,7 @@ set(SOURCES
     src/Clustering/K-Medians.cpp
     src/Clustering/ROCK.cpp
     src/Clustering/DBSCAN.cpp
+    src/Pipeline/ImageLoader.cpp
     src/Pipeline/Pipeline.cpp
     src/Pipeline/Update.cpp
     src/Pipeline/Status.cpp

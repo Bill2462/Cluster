@@ -37,6 +37,10 @@ void Pipeline::update()
     if(getStatus() == PROCESSING_COMPLETED || getStatus() == READY)
         return;
     
+    //join all threads that are currently running
+    for(auto it=workerPool.begin(); it<workerPool.end(); it++)
+        (*it).join();
+
     //start next stage of the processing
     switch(status)
     {
