@@ -37,6 +37,7 @@ set(SOURCES
     src/Clustering/K-Medians.cpp
     src/Clustering/ROCK.cpp
     src/Clustering/DBSCAN.cpp
+    src/Pipeline/Pipeline.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
@@ -47,3 +48,4 @@ link_directories("../extLibs/build/pyclustering/")
 target_link_libraries(magic ${OpenCV_LIBS})
 target_link_libraries(magic mathtoolbox)
 target_link_libraries(magic pycluster)
+target_link_libraries(magic pthread)

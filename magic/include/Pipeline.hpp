@@ -55,7 +55,7 @@ namespace magic
         
         void update();
         void startProcessing(unsigned int threads);
-        void resetProcessing();
+        void resetPipeline();
         
         /**
          * @brief Pipeline status.
@@ -83,7 +83,7 @@ namespace magic
             bool clusteringCompleted = false;
             bool dimRedoxCompleted = false;
         };
-        Progress progress() const;
+        Progress getProgress() const;
 
     private:
         using ImagePathPool = std::pair<std::mutex, std::vector<std::string>>;
@@ -96,8 +96,10 @@ namespace magic
         void extractFeatures();
         void cluster();
         void reduceFeatures();
+        void generateBatchIntervals();
         unsigned int threads = 1; /** @brief Number of threads. */
         std::vector<std::thread> workerPool; /** @brief All currently running threads. */
+        std::vector<std::pair<size_t, size_t>> batchIntervals; /** @brief Batch intervals. */
 
         //progress counters
         size_t inputSize = 0; /** @brief Size of the input. */
