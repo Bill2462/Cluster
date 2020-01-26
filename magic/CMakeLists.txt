@@ -39,6 +39,7 @@ set(SOURCES
     src/Clustering/DBSCAN.cpp
     src/Pipeline/ImageLoader.cpp
     src/Pipeline/Pipeline.cpp
+    src/Pipeline/Preprocessor.cpp
     src/Pipeline/Update.cpp
     src/Pipeline/Status.cpp
     src/Pipeline/Process.cpp
