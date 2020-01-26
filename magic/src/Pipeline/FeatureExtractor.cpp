@@ -1,6 +1,6 @@
 /**
- * @file Preprocessor.cpp
- * @brief This source file contains source code for the preprocessing stage of the pipeline.
+ * @file Clustering.cpp
+ * @brief This source file contains source code for the feature extraction stage of the pipeline.
  * @author Krzysztof Adamkiewicz
  * @date 26/1/2020
  */
@@ -21,19 +21,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Pipeline.hpp"
-#include "ImageUtils.hpp"
-#include <algorithm>
+#include "Pipeline.hpp" 
 
 using namespace magic;
 
-void Pipeline::preprocessImage()
+void Pipeline::extractFeatures()
 {
-    auto imageProcessor = [](std::pair<size_t, size_t>&range,
-                          std::atomic<size_t>& progressCounter,
-                          ImagePool& images)
+    auto featureExtractorFun = [](std::pair<size_t, size_t>&range,
+                               std::atomic<size_t>& progressCounter,
+                               ImagePool& images,
+                               FeaturePool& features,
+                               std::shared_ptr<FeatureExtractor> extractor)
     {
-        //generate path bath
         images.first.lock();
         ImageDataset imageBatch
         (
@@ -42,13 +41,13 @@ void Pipeline::preprocessImage()
         );
         images.first.unlock();
         
-        //perform image loading
-        resizeDataset(imageBatch, progressCounter, 300, 300);
+        extractor->setProgressCounter(progressCounter);
+        FeatureDataset featuresBatch = extractor->buildFeatures(imageBatch);
         
         //insert result
-        images.first.lock();
-        std::copy(imageBatch.begin(), imageBatch.end(), images.second.begin() + range.first);
-        images.first.unlock();
+        features.first.lock();
+        features.second.insert(features.second.end(), featuresBatch.begin(), featuresBatch.end());
+        features.first.unlock();
     };
     
     for(unsigned int i=0; i<threads; i++)
@@ -57,10 +56,12 @@ void Pipeline::preprocessImage()
         (
             std::thread
             (
-                imageProcessor,
+                featureExtractorFun,
                 std::ref(batchIntervals[i]),
-                std::ref(preprocessedCounter),
-                std::ref(images)
+                std::ref(loadedCounter),
+                std::ref(images),
+                std::ref(imageFeatures),
+                featureExtractor
             )
         );
     }
