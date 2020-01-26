@@ -55,7 +55,7 @@ namespace magic
         
         void update();
         void startProcessing(unsigned int threads);
-        void resetPipeline();
+        void reset();
         
         /**
          * @brief Pipeline status.
@@ -97,6 +97,7 @@ namespace magic
         void cluster();
         void reduceFeatures();
         void generateBatchIntervals();
+        bool isCurrentStageFinished() const;
         unsigned int threads = 1; /** @brief Number of threads. */
         std::vector<std::thread> workerPool; /** @brief All currently running threads. */
         std::vector<std::pair<size_t, size_t>> batchIntervals; /** @brief Batch intervals. */
@@ -113,8 +114,8 @@ namespace magic
         ImagePathPool imagePaths; /** @brief Paths to images ordered in batches. */
         ImagePool images; /** @brief Images dataset. */
         FeaturePool imageFeatures; /** @brief Image features. */
-        std::future<FeatureDataset> reducedFeatures; /** @brief Recuded image features. */
-        std::future<std::vector<Cluster>> clusters; /** @brief Clusters computed. */
+        mutable std::future<FeatureDataset> reducedFeatures; /** @brief Recuded image features. */
+        mutable std::future<std::vector<Cluster>> clusters; /** @brief Clusters computed. */
          
         //processors
         std::shared_ptr<ClusteringAlgorithm> clusteringAlgorithm; /** @brief Clustering algorithm. */

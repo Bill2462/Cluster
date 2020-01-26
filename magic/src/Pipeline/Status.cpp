@@ -38,6 +38,7 @@ Pipeline::Status Pipeline::getStatus() const
 /**
  * @brief Get pipeline progress report.
  * @return Pipeline progress report object.
+ * @throw std::runtime_error If input has not been loaded yet.
  */
 Pipeline::Progress Pipeline::getProgress() const
 {

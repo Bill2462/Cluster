@@ -39,6 +39,8 @@ set(SOURCES
     src/Clustering/DBSCAN.cpp
     src/Pipeline/Pipeline.cpp
     src/Pipeline/Status.cpp
+    src/Pipeline/Process.cpp
+    src/Pipeline/Data.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
