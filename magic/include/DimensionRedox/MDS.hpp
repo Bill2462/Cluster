@@ -35,7 +35,7 @@ namespace magic
     class MDS : public magic::DimReductionAlgorithm
     {
     public:
-        void reduce(FeatureDataset& dataset, unsigned short outputDim) override;
+        FeatureDataset reduce(const FeatureDataset& dataset, unsigned short outputDim) override;
         
     private:
         void computeDistanceMatrix(const FeatureDataset& points);

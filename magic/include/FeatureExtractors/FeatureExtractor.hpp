@@ -26,6 +26,7 @@
 
 #include "Types.hpp"
 #include <memory>
+#include <atomic>
 
 namespace magic
 {
@@ -38,7 +39,8 @@ namespace magic
         enum Type
         {
             OPENCV2_EXTRAXTORS,
-            GLOBAL_HIST
+            GLOBAL_HIST,
+            NONE
         };
 
         static std::shared_ptr<FeatureExtractor> build(Type type);
@@ -46,14 +48,20 @@ namespace magic
         /**
          * @brief Build feature vector for the image dataset.
          * @param dataset Image dataset.
+         * @return Feature dataset.
          */
-        virtual void buildFeatures(ImageDataset& dataset) const = 0;
+        virtual FeatureDataset buildFeatures(const ImageDataset& dataset) const = 0;
+
+        void setProgressCounter(std::atomic<size_t>& progressCounter);
         
         /**
          * @brief Get the lenght of the feature vector.
          * @return Lenght of the feature vector.
          */
         virtual unsigned int featureVectorSize() const = 0;
+        
+    protected:
+        mutable std::atomic<size_t>* progressCounter = nullptr; /** @brief Progress counter. */
     };
 }
 

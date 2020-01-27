@@ -25,12 +25,16 @@
 #define IMAGE_UTILS_HPP_INCLUDED
 
 #include "Types.hpp"
+#include <atomic>
 
 namespace magic
 {
-    std::shared_ptr<Image> loadImageFromFile(const std::string& filePath);
+    Image loadImageFromFile(const std::string& filePath);
     ImageDataset loadImageBatch(const std::vector<std::string>& filePaths);
-    FeatureDataset generateFeaturesDataset(const ImageDataset& dataset);
+    ImageDataset loadImageBatch(const std::vector<std::string>& filePaths, std::atomic<size_t>& progressCounter);
+
+    void resizeDataset(ImageDataset& images, unsigned int width, unsigned int height);
+    void resizeDataset(ImageDataset& images, std::atomic<size_t>& progressCounter, unsigned int width, unsigned int height);
 }
 
 #endif

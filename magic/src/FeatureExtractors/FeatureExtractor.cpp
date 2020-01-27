@@ -24,6 +24,7 @@
 #include "FeatureExtractors/FeatureExtractor.hpp"
 #include "FeatureExtractors/GlobalHist.hpp"
 #include "FeatureExtractors/OpenCV_Descriptors.hpp"
+#include <exception>
 
 using namespace magic;
 
@@ -31,6 +32,7 @@ using namespace magic;
  * @brief Build feature extractor.
  * @param type Feature extractor type.
  * @return Shared pointer to the feature extractor object.
+ * @throw std::runtime_error If the type of the algorithm is invalid.
  */
 std::shared_ptr<FeatureExtractor> FeatureExtractor::build(FeatureExtractor::Type type)
 {
@@ -41,7 +43,21 @@ std::shared_ptr<FeatureExtractor> FeatureExtractor::build(FeatureExtractor::Type
 
         case FeatureExtractor::GLOBAL_HIST:
             return std::shared_ptr<FeatureExtractor>(new OpenCV_Descriptor());
+
+        default:
+            break;
     }
     
+    throw(std::runtime_error("Invalid feature extraction algorithm type"));
+    
     return std::shared_ptr<FeatureExtractor>(nullptr);
+}
+
+/**
+ * @brief Set progress variable counter.
+ * @param progressCounter Progress counter atomic variable.
+ */
+void FeatureExtractor::setProgressCounter(std::atomic<size_t>& progressCounter)
+{
+    this->progressCounter = &progressCounter;
 }
