@@ -23,6 +23,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -fconcepts")
 
 include_directories(utils/include)
+link_directories("extLibs/build/mathtoolbox/")
+link_directories("extLibs/build/pyclustering/")
 
 add_subdirectory(utils)
 add_subdirectory(magic)

@@ -52,9 +52,6 @@ set(SOURCES
 
 add_library(magic STATIC ${SOURCES})
 
-link_directories("../extLibs/build/mathtoolbox/")
-link_directories("../extLibs/build/pyclustering/")
-
 target_link_libraries(magic ${OpenCV_LIBS})
 target_link_libraries(magic mathtoolbox)
 target_link_libraries(magic pycluster)
