@@ -30,6 +30,7 @@ set(SOURCES
   mainwindow.h
   mainwindow.ui
   mainWindow_events.cpp
+  progressdialog.cpp
   qcustomplot/qcustomplot.cpp
 )
 
