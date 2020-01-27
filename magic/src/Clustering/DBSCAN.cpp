@@ -31,7 +31,7 @@ using namespace magic;
  * @param features Points.
  * @return Vector of clusters.
  */
-std::vector<Cluster> DBSCAN::cluster(const ImageDataset& dataset) const
+std::vector<Cluster> DBSCAN::cluster(const FeatureDataset& dataset) const
 {
     std::vector<FeatureVector> features = copyFeatures(dataset);
     pyclustering::clst::cluster_data clusters;

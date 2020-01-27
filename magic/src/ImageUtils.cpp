@@ -24,6 +24,7 @@
 #include "ImageUtils.hpp"
 #include <exception>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace magic;
 
@@ -33,21 +34,18 @@ using namespace magic;
  * @return Image object.
  * @throw std::runtime_error If error occurs dring loading.
  */
-std::shared_ptr<Image> magic::loadImageFromFile(const std::string& filePath)
+Image magic::loadImageFromFile(const std::string& filePath)
 {
     cv::Mat img = cv::imread(filePath);
     if(img.data == nullptr)
         throw(std::runtime_error("Cannot load file: " + filePath));
-    
-    std::shared_ptr<Image> ptr(new Image);
-    ptr->path = filePath;
-    ptr->image = img;
-    return ptr;
+
+    return {filePath, img};
 }
 
 /**
  * @brief Load a batch of images.
- * @param filePaths
+ * @param filePaths Vector of image paths.
  * @return Vector of image objects.
  * @throw std::runtime_error If error occurs during loading.
  */
@@ -63,17 +61,51 @@ ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
 }
 
 /**
- * @brief Generate features dataset.
- * @param dataset Image daaset.
- * @return Feature dataset.
+ * @brief Load a batch of images with a progress counter.
+ * @param filePaths Vector of image paths.
+ * @return Vector of image objects.
+ * @throw std::runtime_error If error occurs during loading.
  */
-FeatureDataset magic::generateFeaturesDataset(const ImageDataset& dataset)
+ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths, std::atomic<size_t>& progressCounter)
 {
-    FeatureDataset featureDataset;
-    featureDataset.reserve(dataset.size());
+    ImageDataset images;
+    images.reserve(filePaths.size());
     
-    for(auto it=dataset.begin(); it<dataset.end(); it++)
-        featureDataset.push_back(std::shared_ptr<FeatureVector>(new FeatureVector((*it)->featureVector)));
+    for(auto it=filePaths.begin(); it<filePaths.end(); it++)
+    {
+        images.push_back(magic::loadImageFromFile(*it));
+        progressCounter.fetch_add(1, std::memory_order_relaxed);//increment progress counter
+    } 
+    
+    return images;
+}
 
-    return featureDataset;
+/**
+ * @brief Resize the entire dataset.
+ * @param images Image dataset.
+ * @param width Width of the output images.
+ * @param height Height of the output images.
+ */
+void magic::resizeDataset(ImageDataset& images, unsigned int width, unsigned int height)
+{
+    for(auto it=images.begin(); it<images.end(); it++)
+    {
+        cv::resize((*it).image, (*it).image, cv::Size(width, height), cv::INTER_LINEAR);
+    }
+}
+
+/**
+ * @brief Resize the entire dataset with the progress counter.
+ * @param images Image dataset.
+ * @param progressCounter Progress counter.
+ * @param width Width of the output images.
+ * @param height Height of the output images.
+ */
+void magic::resizeDataset(ImageDataset& images, std::atomic<size_t>& progressCounter, unsigned int width, unsigned int height)
+{
+    for(auto it=images.begin(); it<images.end(); it++)
+    {
+        cv::resize((*it).image, (*it).image, cv::Size(width, height), cv::INTER_LINEAR);
+        progressCounter.fetch_add(1, std::memory_order_relaxed);
+    }
 }

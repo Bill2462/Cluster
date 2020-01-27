@@ -31,29 +31,30 @@
 namespace magic
 {
     /**
-     * @brief Dimensionality algorithm reducition type.
-     */
-    enum DimReductionAlgorithmType
-    {
-        MDS_ALGORITHM
-    };
-    
-    /**
      * @brief Dimensionality reduction algorithm.
      */
     class DimReductionAlgorithm
     {
     public:
-        static std::shared_ptr<DimReductionAlgorithm> build(DimReductionAlgorithmType type);
+        /**
+         * @brief Dimensionality algorithm reducition type.
+         */
+        enum Type
+        {
+            MDS_ALGORITHM,
+            NONE
+        };
+
+        static std::shared_ptr<DimReductionAlgorithm> build(Type type);
         
         /**
          * @brief Reduce features vectors of the entire dataset.
          * @param dataset Image dataset.
          * @param outputDim Number of dimensions that the output is supposed to have.
+         * @return Reduced feature dataset.
          */
-        virtual void reduce(FeatureDataset& dataset, unsigned short outputDim) = 0;
+        virtual FeatureDataset reduce(const FeatureDataset& dataset, unsigned short outputDim) = 0;
     };
-    
 }
 
 #endif

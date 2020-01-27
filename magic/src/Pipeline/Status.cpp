@@ -1,8 +1,8 @@
 /**
- * @file DimRedoxFactory.cpp
- * @brief This source file contains source code for the dimensionality algorithm factory.
+ * @file Status.cpp
+ * @brief This source file contains source code for getting pipeline status.
  * @author Krzysztof Adamkiewicz
- * @date 16/1/2020
+ * @date 26/1/2020
  */
 
 // This file is a part of Cluster - Application for image clustering.
@@ -21,29 +21,36 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "DimensionRedox/MDS.hpp"
+#include "Pipeline.hpp" 
 #include <exception>
 
 using namespace magic;
 
 /**
- * @brief Dimensionality reductor factory.
- * @param type Type of the dimensionality reduction algorithm. 
- * @return Returns a shared pointer to the dimensionality reduction algorithm.
- * @throw std::runtime_error If the type of the algorithm is invalid.
+ * @brief Get pipeline status.
+ * @return Pipeline status,
  */
-std::shared_ptr<DimReductionAlgorithm> magic::DimReductionAlgorithm::build(DimReductionAlgorithm::Type type)
+Pipeline::Status Pipeline::getStatus() const
 {
-    switch(type)
-    {
-        case MDS_ALGORITHM:
-            return std::shared_ptr<DimReductionAlgorithm>(new MDS);
+    return status;
+}
 
-        default:
-            break;
+/**
+ * @brief Get pipeline progress report.
+ * @return Pipeline progress report object.
+ * @throw std::runtime_error If input has not been loaded yet.
+ */
+Pipeline::Progress Pipeline::getProgress() const
+{
+    if(inputSize == 0)
+        throw(std::runtime_error("Input is not loaded, cannot calculate progress!"));
+    
+    return 
+    {
+        static_cast<float>(loadedCounter.load())/inputSize,
+        static_cast<float>(preprocessedCounter.load())/inputSize,
+        static_cast<float>(featuredExtractedCounter.load())/inputSize,
+        clusteringCompleted,
+        dimRedoxCompleted
     };
-    
-    throw(std::runtime_error("Invalid dimensionality reduction algorithm type"));
-    
-    return std::shared_ptr<DimReductionAlgorithm>(nullptr);
 }
