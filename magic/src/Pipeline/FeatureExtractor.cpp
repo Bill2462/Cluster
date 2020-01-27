@@ -27,7 +27,7 @@ using namespace magic;
 
 void Pipeline::extractFeatures()
 {
-    auto featureExtractorFun = [](std::pair<size_t, size_t>&range,
+    auto worker = [](std::pair<size_t, size_t>&range,
                                std::atomic<size_t>& progressCounter,
                                ImagePool& images,
                                FeaturePool& features,
@@ -56,7 +56,7 @@ void Pipeline::extractFeatures()
         (
             std::thread
             (
-                featureExtractorFun,
+                worker,
                 std::ref(batchIntervals[i]),
                 std::ref(loadedCounter),
                 std::ref(images),

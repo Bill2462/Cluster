@@ -29,7 +29,7 @@ using namespace magic;
 
 void Pipeline::preprocessImage()
 {
-    auto imageProcessor = [](std::pair<size_t, size_t>&range,
+    auto worker = [](std::pair<size_t, size_t>&range,
                           std::atomic<size_t>& progressCounter,
                           ImagePool& images)
     {
@@ -57,7 +57,7 @@ void Pipeline::preprocessImage()
         (
             std::thread
             (
-                imageProcessor,
+                worker,
                 std::ref(batchIntervals[i]),
                 std::ref(preprocessedCounter),
                 std::ref(images)

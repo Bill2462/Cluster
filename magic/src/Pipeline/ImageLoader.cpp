@@ -31,7 +31,7 @@ using namespace magic;
  */
 void Pipeline::loadImages()
 {
-    auto imageLoader = [](std::pair<size_t, size_t>&range,
+    auto worker = [](std::pair<size_t, size_t>&range,
                           std::atomic<size_t>& progressCounter,
                           ImagePathPool& paths,
                           ImagePool& images)
@@ -60,7 +60,7 @@ void Pipeline::loadImages()
         (
             std::thread
             (
-                imageLoader,
+                worker,
                 std::ref(batchIntervals[i]),
                 std::ref(loadedCounter),
                 std::ref(imagePaths),
