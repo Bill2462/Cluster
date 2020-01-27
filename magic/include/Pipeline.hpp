@@ -97,7 +97,7 @@ namespace magic
         void cluster();
         void reduceFeatures();
         void generateBatchIntervals();
-        bool isCurrentStageFinished() const;
+        bool isCurrentStageFinished();
         unsigned int threads = 1; /** @brief Number of threads. */
         std::vector<std::thread> workerPool; /** @brief All currently running threads. */
         std::vector<std::pair<size_t, size_t>> batchIntervals; /** @brief Batch intervals. */

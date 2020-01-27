@@ -23,6 +23,7 @@
 
 #include "Pipeline.hpp" 
 #include <exception>
+#include <chrono>
 
 using namespace magic;
 
@@ -85,8 +86,9 @@ void Pipeline::reset()
  * @brief Check if current pipeline stage is finished.
  * @return True if current pipeline step is finished.
  */
-bool Pipeline::isCurrentStageFinished() const
+bool Pipeline::isCurrentStageFinished()
 {
+    std::future_status asyncStatus;
     switch(status)
     {
         case LOADING_IMAGES:
@@ -99,10 +101,22 @@ bool Pipeline::isCurrentStageFinished() const
             return featuredExtractedCounter.load() == inputSize;
             
         case PERFORMING_CLUSTERING:
-            return clusteringCompleted;
+            asyncStatus = clusters.wait_for(std::chrono::nanoseconds(1));
+            if(asyncStatus == std::future_status::ready)
+            {
+                clusteringCompleted = true;
+                return true;
+            }
+            return false;
             
         case PERFORMING_DIM_REDOX:
-            return dimRedoxCompleted;
+            asyncStatus = reducedFeatures.wait_for(std::chrono::nanoseconds(1));
+            if(asyncStatus == std::future_status::ready)
+            {
+                dimRedoxCompleted = true;
+                return true;
+            }
+            return false;
         
         default:
             return true;

@@ -37,6 +37,8 @@ set(SOURCES
     src/Clustering/K-Medians.cpp
     src/Clustering/ROCK.cpp
     src/Clustering/DBSCAN.cpp
+    
+    src/Pipeline/Clustering.cpp
     src/Pipeline/FeatureExtractor.cpp
     src/Pipeline/ImageLoader.cpp
     src/Pipeline/Pipeline.cpp
@@ -45,6 +47,7 @@ set(SOURCES
     src/Pipeline/Status.cpp
     src/Pipeline/Process.cpp
     src/Pipeline/Data.cpp
+    src/Pipeline/FeatureReduction.cpp
 )
 
 add_library(magic STATIC ${SOURCES})
