@@ -77,6 +77,12 @@ void MainWindow::on_outputDir_browse_pressed()
  */
 void MainWindow::on_cluster_button_pressed()
 {
+    if(getSettings().inputDir.empty())
+    {
+        QMessageBox::critical(this, "Error", "Input directory not specified!");
+        return;
+    }
+
     //build pipeline
     std::shared_ptr<magic::Pipeline> pipeline
     (
@@ -110,6 +116,8 @@ void MainWindow::on_cluster_button_pressed()
     //show reduced images on the screen
     this->clusters = pipeline->getClusters();
     this->features = pipeline->getReducedFeatures();
+    
+    QMessageBox::information(this, "Success!", std::to_string(clusters.size()) + " clusters found!");
     
     displayFeatures();
 }
