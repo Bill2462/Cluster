@@ -33,6 +33,7 @@ set(SOURCES
   progressdialog.cpp
   qcustomplot/qcustomplot.cpp
   displayFeatures.cpp
+  sortImages.cpp
 )
 
 add_executable(app ${SOURCES})

@@ -53,6 +53,7 @@ private slots:
     
 private:
     void setSettings(settings::UserSettings settings);
+    void sortImages();
     void displayFeatures();
     settings::UserSettings getSettings();
         
