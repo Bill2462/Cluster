@@ -26,6 +26,7 @@
 #define PROGRESSDIALOG_H
 
 #include <QDialog>
+#include <QTimer>
 #include <memory>
 #include "Pipeline.hpp"
 
@@ -44,8 +45,19 @@ public:
     ProgressDialog(QWidget *parent, std::shared_ptr<magic::Pipeline> pipeline);
     ~ProgressDialog();
 
+public slots:
+    void updatePipeline();
+    void updateDisplay();
+
 private:
-    Ui::ProgressDialog *ui;
+    magic::Pipeline::Status lastPipelineStatus = magic::Pipeline::READY;
+    
+    const long DISPLAY_UPDATE_INTERVAL = 100; /** @brief Update interval of the display. */
+    const long PIPELINE_UPDATE_INTERVAL = 10; /** @brief Update interval of the pipeline. */
+    QTimer* displayUpdateTimer; /** @brief Timer for updating display. */
+    QTimer* pipelineUpdateTimer; /** @brief Timer for updating pipeline. */
+    Ui::ProgressDialog* ui;
+    
     std::shared_ptr<magic::Pipeline> processingPipeline; /** @brief Processing pipeline. */
 };
 

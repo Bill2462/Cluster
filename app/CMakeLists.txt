@@ -32,6 +32,7 @@ set(SOURCES
   mainWindow_events.cpp
   progressdialog.cpp
   qcustomplot/qcustomplot.cpp
+  displayFeatures.cpp
 )
 
 add_executable(app ${SOURCES})

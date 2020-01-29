@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>101</width>
+      <width>131</width>
       <height>18</height>
      </rect>
     </property>
@@ -32,7 +32,7 @@
      <rect>
       <x>10</x>
       <y>100</y>
-      <width>111</width>
+      <width>141</width>
       <height>18</height>
      </rect>
     </property>
@@ -91,7 +91,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>161</width>
+      <width>201</width>
       <height>24</height>
      </rect>
     </property>
@@ -103,9 +103,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>190</y>
-      <width>181</width>
-      <height>18</height>
+      <y>187</y>
+      <width>211</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -116,9 +116,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>260</y>
+      <y>247</y>
       <width>181</width>
-      <height>18</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -151,9 +151,9 @@
    <widget class="QPushButton" name="sortImages_button">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>140</x>
       <y>370</y>
-      <width>91</width>
+      <width>101</width>
       <height>26</height>
      </rect>
     </property>
@@ -165,9 +165,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>410</y>
-      <width>161</width>
-      <height>24</height>
+      <y>400</y>
+      <width>201</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -177,10 +177,10 @@
    <widget class="QSpinBox" name="threadCount">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>330</y>
+      <x>150</x>
+      <y>320</y>
       <width>41</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimum">
@@ -192,7 +192,7 @@
      <rect>
       <x>10</x>
       <y>330</y>
-      <width>101</width>
+      <width>121</width>
       <height>18</height>
      </rect>
     </property>
@@ -215,7 +215,7 @@
      <rect>
       <x>510</x>
       <y>10</y>
-      <width>121</width>
+      <width>161</width>
       <height>20</height>
      </rect>
     </property>
@@ -240,7 +240,7 @@
      <x>0</x>
      <y>0</y>
      <width>891</width>
-     <height>23</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>
