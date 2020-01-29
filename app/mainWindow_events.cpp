@@ -117,7 +117,7 @@ void MainWindow::on_cluster_button_pressed()
     this->clusters = pipeline->getClusters();
     this->features = pipeline->getReducedFeatures();
     
-    QMessageBox::information(this, "Success!", std::to_string(clusters.size()) + " clusters found!");
+    QMessageBox::information(this, "Success!", std::string(std::to_string(clusters.size()) + std::string(" clusters found!")).c_str());
     
     displayFeatures();
 }
