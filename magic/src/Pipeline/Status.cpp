@@ -22,7 +22,6 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Pipeline.hpp" 
-#include <exception>
 
 using namespace magic;
 
@@ -38,18 +37,28 @@ Pipeline::Status Pipeline::getStatus() const
 /**
  * @brief Get pipeline progress report.
  * @return Pipeline progress report object.
- * @throw std::runtime_error If input has not been loaded yet.
  */
 Pipeline::Progress Pipeline::getProgress() const
 {
-    if(inputSize == 0)
-        throw(std::runtime_error("Input is not loaded, cannot calculate progress!"));
+    size_t loadedCounter_size = imagePaths.second.size();
+    size_t preprocessedCounter_size = images.second.size();
+    size_t featuredExtractedCounter_size = images.second.size();
+
+    //make sure that we will not get division by 0
+    if(loadedCounter_size == 0)
+        loadedCounter_size = 1;
+
+    if(preprocessedCounter_size == 0)
+        preprocessedCounter_size = 1;
     
+    if(featuredExtractedCounter_size == 0)
+        featuredExtractedCounter_size = 1;
+
     return 
     {
-        static_cast<float>(loadedCounter.load())/inputSize,
-        static_cast<float>(preprocessedCounter.load())/inputSize,
-        static_cast<float>(featuredExtractedCounter.load())/inputSize,
+        static_cast<float>(loadedCounter.load())/loadedCounter_size,
+        static_cast<float>(preprocessedCounter.load())/preprocessedCounter_size,
+        static_cast<float>(featuredExtractedCounter.load())/featuredExtractedCounter_size,
         clusteringCompleted,
         dimRedoxCompleted
     };

@@ -29,7 +29,7 @@ using namespace magic;
 
 void Pipeline::preprocessImage()
 {
-    auto worker = [](std::pair<size_t, size_t>&range,
+    auto worker = [](std::pair<size_t, size_t>range,
                           std::atomic<size_t>& progressCounter,
                           ImagePool& images)
     {
@@ -51,14 +51,15 @@ void Pipeline::preprocessImage()
         images.first.unlock();
     };
     
-    for(unsigned int i=0; i<threads; i++)
+    std::vector<std::pair<size_t, size_t>> chunks = getChunks(images.second.size());
+    for(auto it=chunks.begin(); it<chunks.end(); it++)
     {
         workerPool.push_back
         (
             std::thread
             (
                 worker,
-                std::ref(batchIntervals[i]),
+                *it,
                 std::ref(preprocessedCounter),
                 std::ref(images)
             )

@@ -41,9 +41,12 @@ void Pipeline::startProcessing(unsigned int threads)
     if(threads == 0)
         throw(std::runtime_error("Number of threads cannot be equal to 0"));
     
-    if(inputSize == 0)
-        throw(std::runtime_error("Cannot start processing without any images loaded!"));
-
+    this->threads = threads;
+    
+    if(imagePaths.second.size() == 0)
+        throw(std::runtime_error("Cannot start processing without any paths loaded!"));
+    
+    status = LOADING_IMAGES;
     loadImages();//start loading
 }
 
@@ -56,9 +59,7 @@ void Pipeline::reset()
     if(status != PROCESSING_COMPLETED && status != READY)
         throw(std::runtime_error("Trying to call reset method when pipeline is working."));
 
-    inputSize = 0;
     threads = 1;
-    batchIntervals.clear();
     workerPool.clear();
 
     loadedCounter = 0;
@@ -92,13 +93,13 @@ bool Pipeline::isCurrentStageFinished()
     switch(status)
     {
         case LOADING_IMAGES:
-            return loadedCounter.load() == inputSize;
+            return loadedCounter.load() == imagePaths.second.size();
 
         case PREPROCESSING_IMAGES:
-            return preprocessedCounter.load() == inputSize;
+            return preprocessedCounter.load() == images.second.size();
             
         case GENERATING_FEATURES:
-            return featuredExtractedCounter.load() == inputSize;
+            return featuredExtractedCounter.load() == images.second.size();
             
         case PERFORMING_CLUSTERING:
             asyncStatus = clusters.wait_for(std::chrono::nanoseconds(1));

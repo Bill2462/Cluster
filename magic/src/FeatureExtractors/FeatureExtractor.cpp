@@ -42,7 +42,7 @@ std::shared_ptr<FeatureExtractor> FeatureExtractor::build(FeatureExtractor::Type
             return std::shared_ptr<FeatureExtractor>(new OpenCV_Descriptor());
 
         case FeatureExtractor::GLOBAL_HIST:
-            return std::shared_ptr<FeatureExtractor>(new OpenCV_Descriptor());
+            return std::shared_ptr<FeatureExtractor>(new GlobalHistogram());
 
         default:
             break;
