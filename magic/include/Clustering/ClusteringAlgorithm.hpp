@@ -43,8 +43,6 @@ namespace magic
         enum Type
         {
             DBSCAN_ALGORITHM,
-            K_MEANS_ALGORITHM,
-            K_MEDIANS_ALGORITHM,
             ROCK_ALGORITHM,
             NONE
         };
