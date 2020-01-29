@@ -25,6 +25,7 @@
 #include "FeatureExtractors/GlobalHist.hpp"
 #include <exception>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 using namespace magic;
 /**
@@ -65,13 +66,12 @@ unsigned int GlobalHistogram::featureVectorSize() const
  */
 FeatureDataset GlobalHistogram::buildFeatures(const ImageDataset& dataset) const
 {
-    FeatureDataset featureDataset;
-    featureDataset.reserve(dataset.size());
-    
     cv::Mat hsvImage;
     cv::Mat channels[3];
     cv::Mat hist;
-    cv::Mat dummy;
+        
+    FeatureDataset featureDataset;
+    featureDataset.reserve(dataset.size());
     for(auto it=dataset.begin(); it<dataset.end(); it++)
     {
         //convert image to HSV
@@ -89,14 +89,17 @@ FeatureDataset GlobalHistogram::buildFeatures(const ImageDataset& dataset) const
         const int histogramDimensionality = 1;
         const bool uniform = true;
         const bool accumulate = false;
-        cv::calcHist(&channels[0], sourceChannelNum, &channelDim, dummy, hist, histogramDimensionality, &histSize, &histRange, uniform, accumulate);
+        cv::calcHist(&channels[0], sourceChannelNum, &channelDim, cv::Mat(), hist, histogramDimensionality, &histSize, &histRange, uniform, accumulate);
         
+        //normalize
+        cv::normalize(hist, hist, 0, histSize, cv::NORM_MINMAX, -1, cv::Mat());
+    
         //save it into the vector
         ImageFeature feature;
         feature.path = (*it).path;
-        feature.featureVector.reserve(hist.cols);
-        for(int x=0; x<hist.cols; x++)
-            feature.featureVector.push_back(hist.at<double>(0, x));
+        feature.featureVector.reserve(hist.rows);
+        for(int y=0; y<hist.rows; y++)
+            feature.featureVector.push_back(hist.at<float>(y));
         
         featureDataset.push_back(feature);
 

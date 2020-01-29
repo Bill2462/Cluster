@@ -44,8 +44,6 @@ namespace settings
     const std::map<std::string, magic::ClusteringAlgorithm::Type> CLUSTERING_ALGORITHMS = 
     {
         {"DBSCAN", magic::ClusteringAlgorithm::DBSCAN_ALGORITHM},
-        {"k-means", magic::ClusteringAlgorithm::K_MEANS_ALGORITHM},
-        {"k-medians", magic::ClusteringAlgorithm::K_MEDIANS_ALGORITHM},
         {"ROCK", magic::ClusteringAlgorithm::ROCK_ALGORITHM}
     };
 
@@ -59,7 +57,7 @@ namespace settings
         bool includeSubdirectories = false;
         bool leaveOryginalImages = true;
         magic::FeatureExtractor::Type featureAlgorithm = magic::FeatureExtractor::GLOBAL_HIST;
-        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::K_MEANS_ALGORITHM;
+        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::DBSCAN_ALGORITHM;
         unsigned short threadNumber = 1;
     };
 }
