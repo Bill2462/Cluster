@@ -34,10 +34,10 @@ using namespace magic;
 std::vector<Cluster> DBSCAN::cluster(const FeatureDataset& dataset) const
 {
     std::vector<FeatureVector> features = copyFeatures(dataset);
-    pyclustering::clst::cluster_data clusters;
+    pyclustering::clst::dbscan_data clusters;
     
     //perform clustering
-    pyclustering::clst::dbscan dbscan(0.05, 3);
+    pyclustering::clst::dbscan dbscan(0.05, 1);
     dbscan.process(features, clusters);
     
     //export clustering results
