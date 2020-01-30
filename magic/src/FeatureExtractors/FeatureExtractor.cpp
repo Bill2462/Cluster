@@ -25,6 +25,7 @@
 #include "FeatureExtractors/GlobalHist.hpp"
 #include "FeatureExtractors/OpenCV_Descriptors.hpp"
 #include <exception>
+#include <cmath>
 
 using namespace magic;
 
@@ -61,3 +62,33 @@ void FeatureExtractor::setProgressCounter(std::atomic<size_t>& progressCounter)
 {
     this->progressCounter = &progressCounter;
 }
+
+/**
+ * @brief Normalize features using eucklidan norm.
+ * @param dataset Feature dataset.
+ */
+void FeatureExtractor::normalize(FeatureDataset& dataset)
+{
+    auto vectLen = [](const FeatureVector& vect) -> double
+    {
+        double x = 0;
+        for(auto it=vect.begin(); it<vect.end(); it++)
+            x += pow(*it, 2);
+        
+        return sqrt(x);
+    };
+    
+    auto divVect = [](FeatureVector& vect, double val)
+    {
+        for(auto it=vect.begin(); it<vect.end(); it++)
+            (*it) = (*it) / val;
+    };
+
+    for(auto it=dataset.begin(); it<dataset.end(); it++)
+    {
+        const double len = vectLen((*it).featureVector);
+        divVect((*it).featureVector, len);
+    }
+}
+
+

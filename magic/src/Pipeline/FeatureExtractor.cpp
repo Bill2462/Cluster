@@ -43,6 +43,7 @@ void Pipeline::extractFeatures()
         
         extractor->setProgressCounter(progressCounter);
         FeatureDataset featuresBatch = extractor->buildFeatures(imageBatch);
+        FeatureExtractor::normalize(featuresBatch);
         
         //insert result
         features.first.lock();
