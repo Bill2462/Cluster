@@ -90,5 +90,3 @@ void FeatureExtractor::normalize(FeatureDataset& dataset)
         divVect((*it).featureVector, len);
     }
 }
-
-

@@ -27,7 +27,7 @@ using namespace magic;
 
 void Pipeline::cluster()
 {
-    auto worker = [](FeatureDataset& featureDataset,
+    auto worker = [](const FeatureDataset& featureDataset,
                      std::shared_ptr<ClusteringAlgorithm> clusteringAlg) -> std::vector<Cluster>
     {
         return clusteringAlg->cluster(featureDataset);

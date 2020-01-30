@@ -37,7 +37,7 @@ std::vector<Cluster> ROCK::cluster(const FeatureDataset& dataset) const
     pyclustering::clst::cluster_data clusters;
     
     //perform clustering
-    pyclustering::clst::rock rock;
+    pyclustering::clst::rock rock(0.5, 0, 0);
     rock.process(features, clusters);
     
     //export clustering results
