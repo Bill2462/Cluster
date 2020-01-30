@@ -27,7 +27,12 @@
 
 using namespace magic;
 
+ClusteringAlgorithm::~ClusteringAlgorithm()
+{
+}
+
 /**
+ * 
  * @brief Build clustering algorithm.
  * @param type Clustering algorithm type.
  * @return Shared pointer to the clustering algorithm object. If type is invalid, returns nullptr.

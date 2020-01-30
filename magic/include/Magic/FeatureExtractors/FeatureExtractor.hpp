@@ -24,9 +24,9 @@
 #ifndef MAGIC_FEATURE_EXTRACTOR_HPP_INCLUDED
 #define MAGIC_FEATURE_EXTRACTOR_HPP_INCLUDED
 
-#include "Types.hpp"
 #include <memory>
 #include <atomic>
+#include "../Types.hpp"
 
 namespace magic
 {
@@ -60,6 +60,8 @@ namespace magic
          * @return Lenght of the feature vector.
          */
         virtual unsigned int featureVectorSize() const = 0;
+        
+        virtual ~FeatureExtractor();
         
     protected:
         mutable std::atomic<size_t>* progressCounter = nullptr; /** @brief Progress counter. */

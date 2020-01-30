@@ -25,8 +25,8 @@
 #ifndef APP_SETTINGS_HPP_INCLUDED
 #define APP_SETTINGS_HPP_INCLUDED
 
-#include "Clustering/ClusteringAlgorithm.hpp"
-#include "FeatureExtractors/FeatureExtractor.hpp"
+#include "Magic/Clustering/ClusteringAlgorithm.hpp"
+#include "Magic//FeatureExtractors/FeatureExtractor.hpp"
 
 #include <string>
 #include <map>

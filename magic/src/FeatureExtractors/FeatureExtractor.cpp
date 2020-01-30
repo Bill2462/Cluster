@@ -29,6 +29,10 @@
 
 using namespace magic;
 
+FeatureExtractor::~FeatureExtractor()
+{
+}
+
 /**
  * @brief Build feature extractor.
  * @param type Feature extractor type.

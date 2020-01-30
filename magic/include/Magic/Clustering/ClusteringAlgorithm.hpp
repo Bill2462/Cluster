@@ -27,7 +27,7 @@
 #include <vector>
 #include <memory>
 #include "pyclustering/cluster/cluster_data.hpp"
-#include "Types.hpp"
+#include "../Types.hpp"
 
 namespace magic
 {
@@ -54,6 +54,8 @@ namespace magic
          * @return Clusters found.
          */
         virtual std::vector<Cluster> cluster(const FeatureDataset& dataset) const = 0;
+        
+        virtual ~ClusteringAlgorithm();
         
     protected:
         std::vector<FeatureVector> copyFeatures(const FeatureDataset& dataset) const;

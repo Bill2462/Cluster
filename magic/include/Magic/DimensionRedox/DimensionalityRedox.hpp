@@ -26,7 +26,7 @@
 
 #include <vector>
 #include <memory>
-#include "Types.hpp"
+#include "../Types.hpp"
 
 namespace magic
 {
@@ -54,6 +54,8 @@ namespace magic
          * @return Reduced feature dataset.
          */
         virtual FeatureDataset reduce(const FeatureDataset& dataset, unsigned short outputDim) = 0;
+        
+        virtual ~DimReductionAlgorithm();
     };
 }
 

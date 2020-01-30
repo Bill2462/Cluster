@@ -28,7 +28,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <memory>
-#include "Pipeline.hpp"
+#include "Magic/Pipeline.hpp"
 
 namespace Ui {
 class ProgressDialog;

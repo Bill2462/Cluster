@@ -26,7 +26,7 @@
 
 #include <QMainWindow>
 #include "appSettings.hpp"
-#include "Pipeline.hpp"
+#include "Magic/Pipeline.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

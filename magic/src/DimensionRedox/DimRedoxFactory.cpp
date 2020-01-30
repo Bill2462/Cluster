@@ -26,6 +26,10 @@
 
 using namespace magic;
 
+DimReductionAlgorithm::~DimReductionAlgorithm()
+{
+}
+
 /**
  * @brief Dimensionality reductor factory.
  * @param type Type of the dimensionality reduction algorithm. 
