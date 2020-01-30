@@ -25,8 +25,8 @@
 #ifndef APP_SETTINGS_HPP_INCLUDED
 #define APP_SETTINGS_HPP_INCLUDED
 
-#include "Clustering/ClusteringAlgorithm.hpp"
-#include "FeatureExtractors/FeatureExtractor.hpp"
+#include "Magic/Clustering/ClusteringAlgorithm.hpp"
+#include "Magic//FeatureExtractors/FeatureExtractor.hpp"
 
 #include <string>
 #include <map>
@@ -54,10 +54,10 @@ namespace settings
     {
         std::string inputDir;
         std::string outputDir;
-        bool includeSubdirectories = false;
+        bool includeSubdirectories = true;
         bool leaveOryginalImages = true;
         magic::FeatureExtractor::Type featureAlgorithm = magic::FeatureExtractor::GLOBAL_HIST;
-        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::DBSCAN_ALGORITHM;
+        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::ROCK_ALGORITHM;
         unsigned short threadNumber = 1;
     };
 }

@@ -22,7 +22,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "mainwindow.h"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 #include "./ui_mainwindow.h"
 #include "progressdialog.h"
 #include <QFileDialog>
@@ -103,6 +103,13 @@ void MainWindow::on_cluster_button_pressed()
     catch(std::runtime_error& e)
     {
         QMessageBox::critical(this, "Error", e.what());
+        return;
+    }
+    
+    //ensure that they are some detected files
+    if(imageFilenames.empty())
+    {
+        QMessageBox::critical(this, "Error", "Specifies path is empty!");
         return;
     }
     

@@ -29,6 +29,10 @@
 
 using namespace magic;
 
+FeatureExtractor::~FeatureExtractor()
+{
+}
+
 /**
  * @brief Build feature extractor.
  * @param type Feature extractor type.
@@ -74,6 +78,10 @@ void FeatureExtractor::normalize(FeatureDataset& dataset)
         double x = 0;
         for(auto it=vect.begin(); it<vect.end(); it++)
             x += pow(*it, 2);
+        
+        //default to 1 so we don't normalize to -NAN
+        if(x == 0)
+            return 1;
         
         return sqrt(x);
     };
