@@ -24,6 +24,7 @@
 #include "FeatureExtractors/OpenCV_Descriptors.hpp"
 #include <exception>
 #include <algorithm>
+#include <cmath>
 
 using namespace magic;
 
@@ -60,7 +61,7 @@ unsigned int OpenCV_Descriptor::getKeypointCount() const
  */
 unsigned int OpenCV_Descriptor::featureVectorSize() const
 {
-    return keypointCount*48;
+    return keypointCount*64;
 }
 
 /**
@@ -76,8 +77,6 @@ FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) con
     std::vector<cv::KeyPoint> keyPoints;
     FeatureVector featureVector;
     cv::Mat features;
-    
-    featureVector.resize(keypointCount*48);
     
     for(auto it=dataset.begin(); it<dataset.end(); it++)
     {
@@ -97,10 +96,14 @@ FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) con
         //flatten the features matrix 
         featureVector.assign(features.datastart, features.dataend);
         
+        //truncate if necessary
+        if(featureVector.size() > featureVectorSize())
+            featureVector.resize(featureVectorSize());
+        
         //add 0's to the end of the matrix to match the size if necessary
-        if(keyPoints.size() < keypointCount)
+        if(featureVector.size() < featureVectorSize())
         {
-            for(size_t i=keyPoints.size(); i<keypointCount; i++)
+            for(size_t i=featureVector.size(); i<featureVectorSize(); i++)
                 featureVector.push_back(0);
         }
         

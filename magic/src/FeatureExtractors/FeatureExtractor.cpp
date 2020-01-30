@@ -75,6 +75,10 @@ void FeatureExtractor::normalize(FeatureDataset& dataset)
         for(auto it=vect.begin(); it<vect.end(); it++)
             x += pow(*it, 2);
         
+        //default to 1 so we don't normalize to -NAN
+        if(x == 0)
+            return 1;
+        
         return sqrt(x);
     };
     

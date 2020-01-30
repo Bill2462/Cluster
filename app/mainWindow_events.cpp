@@ -106,6 +106,13 @@ void MainWindow::on_cluster_button_pressed()
         return;
     }
     
+    //ensure that they are some detected files
+    if(imageFilenames.empty())
+    {
+        QMessageBox::critical(this, "Error", "Specifies path is empty!");
+        return;
+    }
+    
     //add files to the pipeline and start processing
     pipeline->setInput(imageFilenames);
     pipeline->startProcessing(getSettings().threadNumber);
