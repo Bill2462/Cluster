@@ -40,6 +40,7 @@ void Pipeline::update()
     //join all threads that are currently running
     for(auto it=workerPool.begin(); it<workerPool.end(); it++)
         (*it).join();
+    workerPool.clear();
 
     //start next stage of the processing
     switch(status)

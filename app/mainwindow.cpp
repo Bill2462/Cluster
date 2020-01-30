@@ -119,7 +119,7 @@ void MainWindow::setSettings(settings::UserSettings settings)
             return Qt::Unchecked;
     };
     ui->inputDir_includeSubdirs->setCheckState(boolToQtState(settings.includeSubdirectories));
-    ui->inputDir_includeSubdirs->setCheckState(boolToQtState(settings.leaveOryginalImages));
+    ui->leaveOryginals_checkbox->setCheckState(boolToQtState(settings.leaveOryginalImages));
     
     ui->threadCount->setValue(settings.threadNumber);
 }

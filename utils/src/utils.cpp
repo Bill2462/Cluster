@@ -208,3 +208,13 @@ void utils::makeDir(const std::string& path)
         throw(std::runtime_error("Filesystem error: " + std::string(e.what())));
     }
 }
+
+/**
+ * @brief Check if directory exists.
+ * @param path Path to the directory.
+ * @return True if directory exists.
+ */
+bool utils::dirExists(const std::string& path)
+{
+    return checkIfDirectory(path);
+}

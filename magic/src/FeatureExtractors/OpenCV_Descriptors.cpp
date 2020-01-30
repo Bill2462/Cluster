@@ -1,6 +1,6 @@
 /**
  * @file OpenCV_Descriptors.cpp
- * @brief This source file contains code for describing dataset using VGG (Visual Geometry Group) method.
+ * @brief This source file contains code for describing dataset using KAZE descriptor.
  * @author Krzysztof Adamkiewicz
  * @date @date 23/1/2020
  */
@@ -29,7 +29,7 @@ using namespace magic;
 
 OpenCV_Descriptor::OpenCV_Descriptor()
 {
-    vgg = cv::xfeatures2d::VGG::create(cv::xfeatures2d::VGG::VGG_48);
+    kaze = cv::KAZE::create();
 }
 
 /**
@@ -82,7 +82,7 @@ FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) con
     for(auto it=dataset.begin(); it<dataset.end(); it++)
     {
         //extract keypoints
-        vgg->detect((*it).image, keyPoints);
+        kaze->detect((*it).image, keyPoints);
         
         //sort keypoints by the response, the higher response, the better the keypoint
         std::sort(keyPoints.begin(), keyPoints.end(), [](auto& a, auto& b) ->bool { return a.response > b.response; });
@@ -92,7 +92,7 @@ FeatureDataset OpenCV_Descriptor::buildFeatures(const ImageDataset& dataset) con
             keyPoints.resize(keypointCount);
         
         //compute features
-        vgg->compute((*it).image, keyPoints, features);
+        kaze->compute((*it).image, keyPoints, features);
 
         //flatten the features matrix 
         featureVector.assign(features.datastart, features.dataend);

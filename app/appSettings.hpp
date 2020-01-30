@@ -25,41 +25,26 @@
 #ifndef APP_SETTINGS_HPP_INCLUDED
 #define APP_SETTINGS_HPP_INCLUDED
 
+#include "Clustering/ClusteringAlgorithm.hpp"
+#include "FeatureExtractors/FeatureExtractor.hpp"
+
 #include <string>
 #include <map>
-#include <ostream>
 
-//TODO: Add actual algorithms and not placeholder.
 namespace settings
 {
-    /**
-     * @brief Feature selection algorithms.
-     */
-    enum FeatureSelectionAlgorithm
-    {
-        INVALID_FEATURE_ALG,
-        MAGIC
-    };
     /** @brief Map containing feature selection algorithms and their names. */
-    const std::map<std::string, FeatureSelectionAlgorithm> FEATURE_SELECTION_ALGORITHMS = 
+    const std::map<std::string, magic::FeatureExtractor::Type> FEATURE_SELECTION_ALGORITHMS = 
     {
-        {"invalid", INVALID_FEATURE_ALG},
-        {"magic", MAGIC}
+        {"OpenCV descriptors", magic::FeatureExtractor::OPENCV2_EXTRAXTORS},
+        {"Color histogram", magic::FeatureExtractor::GLOBAL_HIST}
     };
 
-    /**
-     * @brief Clustering algorithms.
-     */
-    enum ClusteringAlgorithm
-    {
-        K_MEANS,
-        INVALID_CLUTERING_ALG
-    };
     /** @brief Map containing feature selection algorithms and their names. */
-    const std::map<std::string, ClusteringAlgorithm> CLUSTERING_ALGORITHMS = 
+    const std::map<std::string, magic::ClusteringAlgorithm::Type> CLUSTERING_ALGORITHMS = 
     {
-        {"K_mean", K_MEANS},
-        {"INVALID_CLUTERING_ALG", INVALID_CLUTERING_ALG}
+        {"DBSCAN", magic::ClusteringAlgorithm::DBSCAN_ALGORITHM},
+        {"ROCK", magic::ClusteringAlgorithm::ROCK_ALGORITHM}
     };
 
     /**
@@ -71,8 +56,8 @@ namespace settings
         std::string outputDir;
         bool includeSubdirectories = false;
         bool leaveOryginalImages = true;
-        FeatureSelectionAlgorithm featureAlgorithm = INVALID_FEATURE_ALG;
-        ClusteringAlgorithm clusterAlgorithm = K_MEANS;
+        magic::FeatureExtractor::Type featureAlgorithm = magic::FeatureExtractor::GLOBAL_HIST;
+        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::DBSCAN_ALGORITHM;
         unsigned short threadNumber = 1;
     };
 }

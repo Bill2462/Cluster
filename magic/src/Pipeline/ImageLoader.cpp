@@ -31,7 +31,7 @@ using namespace magic;
  */
 void Pipeline::loadImages()
 {
-    auto worker = [](std::pair<size_t, size_t>&range,
+    auto worker = [](std::pair<size_t, size_t>range,
                           std::atomic<size_t>& progressCounter,
                           ImagePathPool& paths,
                           ImagePool& images)
@@ -44,24 +44,25 @@ void Pipeline::loadImages()
             paths.second.begin() + range.second
         );
         paths.first.unlock();
-        
+
         //perform image loading
         ImageDataset dataset = loadImageBatch(pathBatch, progressCounter);
-        
+
         //insert result
         images.first.lock();
         images.second.insert(images.second.end(), dataset.begin(), dataset.end());
         images.first.unlock();
     };
     
-    for(unsigned int i=0; i<threads; i++)
+    std::vector<std::pair<size_t, size_t>> chunks = getChunks(imagePaths.second.size());
+    for(auto it=chunks.begin(); it<chunks.end(); it++)
     {
         workerPool.push_back
         (
             std::thread
             (
                 worker,
-                std::ref(batchIntervals[i]),
+                *it,
                 std::ref(loadedCounter),
                 std::ref(imagePaths),
                 std::ref(images)

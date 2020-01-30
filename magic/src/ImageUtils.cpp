@@ -25,8 +25,58 @@
 #include <exception>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <algorithm>
 
 using namespace magic;
+
+/**
+ * @brief Allowed image extensions.
+ */
+inline const std::vector<std::string> ALLOWED_FILE_EXTENSIONS = 
+{
+    ".bmp",
+    ".dib",
+    ".jpeg",
+    ".jpg",
+    ".jpe",
+    ".jp2",
+    ".png",
+    ".web",
+    ".pbm",
+    ".pgm",
+    ".ppm",
+    ".pxm",
+    ".pnm",
+    ".pfm",
+    ".sr",
+    ".ras",
+    ".tiff",
+    ".tif",
+    ".exr",
+    ".hdr",
+    ".pic"
+};
+
+/**
+ * @brief Check if image format is supported.
+ * @param fileName Name of the file.
+ * @return True if file format is supported.
+ */
+inline bool isFileFormatSupported(const std::string& fileName)
+{
+    std::size_t found = fileName.find_last_of(".");
+    if(found == std::string::npos)
+        return false;
+    
+    std::string extension = fileName.substr(found);
+    for(auto it=ALLOWED_FILE_EXTENSIONS.begin(); it<ALLOWED_FILE_EXTENSIONS.end(); it++)
+    {
+        if((*it) == extension)
+            return true;
+    }
+    
+    return false;
+}
 
 /**
  * @brief Load a single image.
@@ -52,10 +102,14 @@ Image magic::loadImageFromFile(const std::string& filePath)
 ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
 {
     ImageDataset images;
-    images.reserve(filePaths.size());
     
     for(auto it=filePaths.begin(); it<filePaths.end(); it++)
+    {
+        if(!isFileFormatSupported(*it))
+            continue;
+        
         images.push_back(magic::loadImageFromFile(*it));
+    }
     
     return images;
 }
@@ -69,12 +123,14 @@ ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths)
 ImageDataset magic::loadImageBatch(const std::vector<std::string>& filePaths, std::atomic<size_t>& progressCounter)
 {
     ImageDataset images;
-    images.reserve(filePaths.size());
     
     for(auto it=filePaths.begin(); it<filePaths.end(); it++)
     {
-        images.push_back(magic::loadImageFromFile(*it));
         progressCounter.fetch_add(1, std::memory_order_relaxed);//increment progress counter
+        if(!isFileFormatSupported(*it))
+            continue;
+
+        images.push_back(magic::loadImageFromFile(*it));
     } 
     
     return images;

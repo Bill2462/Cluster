@@ -34,6 +34,7 @@ namespace utils
     void moveFile(const std::string& source, const std::string& dest);
     void copyFile(const std::string& source, const std::string& dest);
     void makeDir(const std::string& path);
+    bool dirExists(const std::string& path);
 }
 
 #endif

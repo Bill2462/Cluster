@@ -26,6 +26,7 @@
 
 #include <QMainWindow>
 #include "appSettings.hpp"
+#include "Pipeline.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -51,9 +52,15 @@ private slots:
     void on_sortImages_button_pressed();
     
 private:
-    Ui::MainWindow* ui;
-    settings::UserSettings getSettings();
     void setSettings(settings::UserSettings settings);
+    void sortImages();
+    void displayFeatures();
+    settings::UserSettings getSettings();
+        
+    Ui::MainWindow* ui;
+    std::vector<magic::Cluster> clusters;
+    magic::FeatureDataset features;
+    
 };
 
 #endif

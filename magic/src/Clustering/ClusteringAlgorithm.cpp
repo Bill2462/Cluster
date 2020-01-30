@@ -22,8 +22,6 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Clustering/DBSCAN.hpp"
-#include "Clustering/K-Means.hpp"
-#include "Clustering/K-Medians.hpp"
 #include "Clustering/ROCK.hpp"
 #include <exception>
 
@@ -41,12 +39,6 @@ std::shared_ptr<ClusteringAlgorithm> ClusteringAlgorithm::build(ClusteringAlgori
     {
         case DBSCAN_ALGORITHM:
             return std::shared_ptr<ClusteringAlgorithm>(new DBSCAN);
-
-        case K_MEANS_ALGORITHM:
-            return std::shared_ptr<ClusteringAlgorithm>(new K_Means);
-
-        case K_MEDIANS_ALGORITHM:
-            return std::shared_ptr<ClusteringAlgorithm>(new K_Medians);
 
         case ROCK_ALGORITHM:
             return std::shared_ptr<ClusteringAlgorithm>(new ROCK);
@@ -68,7 +60,6 @@ std::shared_ptr<ClusteringAlgorithm> ClusteringAlgorithm::build(ClusteringAlgori
 std::vector<FeatureVector> ClusteringAlgorithm::copyFeatures(const FeatureDataset& dataset) const
 {
     std::vector<FeatureVector> features;
-    features.resize(dataset.size());
     
     for(auto it=dataset.begin(); it<dataset.end(); it++)
         features.push_back((*it).featureVector);

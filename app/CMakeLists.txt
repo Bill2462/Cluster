@@ -22,18 +22,25 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
 
 include_directories(qcustomplot)
+include_directories(${CMAKE_SOURCE_DIR}/magic/include)
+
 set(SOURCES
   main.cpp
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
   mainWindow_events.cpp
+  progressdialog.cpp
   qcustomplot/qcustomplot.cpp
+  displayFeatures.cpp
+  sortImages.cpp
 )
 
 add_executable(app ${SOURCES})
 
 find_library(${CMAKE_SOURCE_DIR} utils)
+find_library(${CMAKE_SOURCE_DIR} magic)
 target_link_libraries(app PRIVATE utils)
+target_link_libraries(app PRIVATE magic)
 target_link_libraries(app PRIVATE Qt5::Widgets)
 target_link_libraries(app PRIVATE Qt5::PrintSupport)

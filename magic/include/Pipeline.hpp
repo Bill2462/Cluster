@@ -77,9 +77,9 @@ namespace magic
          */
         struct Progress
         {
-            float loadedingState= 0;
+            float loadingState = 0;
             float preprocessingState = 0;
-            float featuresExtractionState = 0;
+            float featureExtractionState = 0;
             bool clusteringCompleted = false;
             bool dimRedoxCompleted = false;
         };
@@ -96,17 +96,15 @@ namespace magic
         void extractFeatures();
         void cluster();
         void reduceFeatures();
-        void generateBatchIntervals();
+        std::vector<std::pair<size_t, size_t>> getChunks(size_t size) const;
         bool isCurrentStageFinished();
         unsigned int threads = 1; /** @brief Number of threads. */
         std::vector<std::thread> workerPool; /** @brief All currently running threads. */
-        std::vector<std::pair<size_t, size_t>> batchIntervals; /** @brief Batch intervals. */
 
         //progress counters
-        size_t inputSize = 0; /** @brief Size of the input. */
-        std::atomic<size_t> loadedCounter; /** @brief Counter of the loaded images. */
-        std::atomic<size_t> preprocessedCounter; /** @brief Counter of the preprocessed images. */
-        std::atomic<size_t> featuredExtractedCounter; /** @brief Counter of the extracted features. */
+        std::atomic<size_t> loadedCounter = 0; /** @brief Counter of the loaded images. */
+        std::atomic<size_t> preprocessedCounter = 0; /** @brief Counter of the preprocessed images. */
+        std::atomic<size_t> featuredExtractedCounter = 0; /** @brief Counter of the extracted features. */
         bool clusteringCompleted = false; /** @brief Is clustering completed. */
         bool dimRedoxCompleted = false; /** @brief Is dimensionality reduction completed. */
         

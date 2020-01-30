@@ -44,7 +44,8 @@ namespace magic
         };
 
         static std::shared_ptr<FeatureExtractor> build(Type type);
-        
+        static void normalize(FeatureDataset& dataset);
+
         /**
          * @brief Build feature vector for the image dataset.
          * @param dataset Image dataset.

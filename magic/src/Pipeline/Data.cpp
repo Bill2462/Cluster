@@ -37,7 +37,6 @@ void Pipeline::setInput(const std::vector<std::string>& paths)
         throw(std::runtime_error("Cannot set pipeline input when pipeline status != READY"));
     
     imagePaths.second = paths;
-    inputSize = paths.size();
 }
 
 /**
@@ -67,27 +66,30 @@ FeatureDataset Pipeline::getReducedFeatures() const
 }
 
 /**
- * @brief Generate intervals batch intervals.
- * @throw std::runtime_error If pipeline status != READY or if the data are not loaded.
+ * @brief Generate chunk intervals.
+ * @param size Size of the input.
+ * @return Vector of chunk ranges.
+ * @throw std::runtime_error If size is = 0.
  */
-void Pipeline::generateBatchIntervals()
+std::vector<std::pair<size_t, size_t>> Pipeline::getChunks(size_t size) const
 {
-    if(inputSize == 0)
-        throw(std::runtime_error("Cannot generate batch intervals when input is not loaded"));
-
-    if(getStatus() != READY)
-        throw(std::runtime_error("Cannot generate batch intervals when pipeline status != READY"));
+    if(size == 0)
+        throw(std::runtime_error("Size cannot be = 0"));
     
     //if size of the input is smaller than number of threads, fall back to 1 thread
-    if(threads > inputSize)
-        threads = 1;
+    unsigned int threadCount = threads;
+    if(threads > size)
+        threadCount = 1;
 
-    const size_t batchSize = inputSize/threads;
-    for(unsigned int i=0; i<threads; i++)
+    const size_t batchSize = size/threadCount;
+    std::vector<std::pair<size_t, size_t>> batchIntervals;
+    for(unsigned int i=0; i<threadCount; i++)
     {
-        if(i == threads-1)
-            batchIntervals.push_back(std::make_pair(i*batchSize, inputSize)); //last batch must be a little larger to cover the whole dataset
+        if(i == threadCount-1)
+            batchIntervals.push_back(std::make_pair(i*batchSize, size)); //last batch must be a little larger to cover the whole dataset
         else
             batchIntervals.push_back(std::make_pair(i*batchSize, (i+1)*batchSize));
     }
+    
+    return batchIntervals;
 }

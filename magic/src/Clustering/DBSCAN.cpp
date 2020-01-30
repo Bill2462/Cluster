@@ -37,7 +37,7 @@ std::vector<Cluster> DBSCAN::cluster(const FeatureDataset& dataset) const
     pyclustering::clst::cluster_data clusters;
     
     //perform clustering
-    pyclustering::clst::dbscan dbscan;
+    pyclustering::clst::dbscan dbscan(0.05, 3);
     dbscan.process(features, clusters);
     
     //export clustering results

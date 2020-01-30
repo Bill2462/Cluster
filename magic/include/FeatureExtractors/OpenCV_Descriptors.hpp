@@ -25,7 +25,7 @@
 #define MAGIC_OPENCV_DESCRIPTOR_HPP_INCLUDED
 
 #include "FeatureExtractor.hpp"
-#include <opencv2/xfeatures2d.hpp>
+#include <opencv2/features2d.hpp>
 
 namespace magic
 {
@@ -44,7 +44,7 @@ namespace magic
         unsigned int getKeypointCount() const;
         
     private:
-        cv::Ptr<cv::xfeatures2d::VGG> vgg; /** @brief VGG descriptor. */
+        cv::Ptr<cv::KAZE> kaze; /** @brief VGG descriptor. */
         unsigned int keypointCount = 5; /** @brief How many keypoints do we want to use. */
     };
 }

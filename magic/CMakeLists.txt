@@ -19,8 +19,6 @@ include_directories(include)
 find_package(OpenCV REQUIRED)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
-include_directories(../extLibs/mathtoolbox/include)
-include_directories(../extLibs/pyclustering/include)
 
 set(SOURCES
     src/ImageUtils.cpp
@@ -33,8 +31,6 @@ set(SOURCES
     src/FeatureExtractors/OpenCV_Descriptors.cpp
     
     src/Clustering/ClusteringAlgorithm.cpp
-    src/Clustering/K-Means.cpp
-    src/Clustering/K-Medians.cpp
     src/Clustering/ROCK.cpp
     src/Clustering/DBSCAN.cpp
     
@@ -51,9 +47,6 @@ set(SOURCES
 )
 
 add_library(magic STATIC ${SOURCES})
-
-link_directories("../extLibs/build/mathtoolbox/")
-link_directories("../extLibs/build/pyclustering/")
 
 target_link_libraries(magic ${OpenCV_LIBS})
 target_link_libraries(magic mathtoolbox)
