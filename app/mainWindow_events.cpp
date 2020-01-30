@@ -22,7 +22,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "mainwindow.h"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 #include "./ui_mainwindow.h"
 #include "progressdialog.h"
 #include <QFileDialog>

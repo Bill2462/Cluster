@@ -23,7 +23,7 @@
 
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 #include <algorithm>
 #include <cmath>
 

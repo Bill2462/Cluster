@@ -54,10 +54,10 @@ namespace settings
     {
         std::string inputDir;
         std::string outputDir;
-        bool includeSubdirectories = false;
+        bool includeSubdirectories = true;
         bool leaveOryginalImages = true;
         magic::FeatureExtractor::Type featureAlgorithm = magic::FeatureExtractor::GLOBAL_HIST;
-        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::DBSCAN_ALGORITHM;
+        magic::ClusteringAlgorithm::Type clusterAlgorithm = magic::ClusteringAlgorithm::ROCK_ALGORITHM;
         unsigned short threadNumber = 1;
     };
 }
