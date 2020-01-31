@@ -34,7 +34,7 @@ using namespace magic;
 std::vector<Cluster> ROCK::cluster(const FeatureDataset& dataset) const
 {
     std::vector<FeatureVector> features = copyFeatures(dataset);
-    pyclustering::clst::cluster_data clusters;
+    pyclustering::clst::rock_data clusters;
     
     //perform clustering
     pyclustering::clst::rock rock(0.5, 0, 0);
